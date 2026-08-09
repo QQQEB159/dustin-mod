@@ -105,8 +105,8 @@ function update(elapsed:Float) {
                         // It isn't ready yet, sorry
                         //menu.insert(1, new Checkbox("Photo-Sensitive Mode", "Check this if you are sensitive to flashing lights.", "antiFlash", null, FlxG.save.data));
 
-                        for (i in 3...5) menu.members.remove(menu.members[i]);
-                        menu.members.remove(menu.members[3]);
+                        for (i in 2...4) menu.members.remove(menu.members[i]);
+                        menu.members.remove(menu.members[2]);
                         //menu.members[4].suffix = "/Shaders >";
                     case "optionsMenu.advanced":
 
@@ -115,9 +115,9 @@ function update(elapsed:Float) {
                         menu.members.insert(4, shaderOption);
 
                         menu.members.remove(menu.members[2]); // remove low memory mode
-
+                        
                         shaderOption.selectCallback = () -> {
-                            menu.members[3].locked = !shaderOption.checked;
+                            menu.members[4].locked = !shaderOption.checked;
                         };
 
                         menu.add(new TextOption("Specific Shaders ", "Change more advanced Shader options.", ">", () -> {
@@ -167,6 +167,7 @@ function update(elapsed:Float) {
 
                         menu.members[0].changedCallback(Std.string(Options.quality));
                         shaderOption.selectCallback();
+
                     case "optionsTree.miscellaneous-name":
                         for (member in 1...5) // get rid of some cne stuff that will mess with the build
                             menu.members.remove(menu.members[1]);

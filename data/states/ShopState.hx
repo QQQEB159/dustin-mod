@@ -530,10 +530,10 @@ function update(elapsed:Float) {
     if(shop.items[0] != null)
         stats.item.angle = FlxMath.fastSin(_sin);
 
-    if(FlxG.keys.justPressed.F6) {
+    /*if(FlxG.keys.justPressed.F6) {
         FlxG.switchState(new ModState("OldShopState"));
         return;
-    }
+    }*/
 
     if(dialogue.typeText.isTyping && (prevTxt != (prevTxt = dialogue.txt.text)) && dialogue.txt.text != "" && !endsWithArray(dialogue.txt.text, [" ", "\n"])) {
         if(bgText.alpha != 0)

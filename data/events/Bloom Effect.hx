@@ -1,7 +1,7 @@
 public var bloom:CustomShader = null;
 
 function create() {
-    if(!Options.gameplayShaders && FlxG.save.data.bloom) {
+    if(!Options.gameplayShaders || !FlxG.save.data.bloom) {
         disableScript();
         return;
     }

@@ -3,7 +3,7 @@ import funkin.editors.charter.Charter;
 public var saturation:CustomShader;
 
 function create() {
-    if(!Options.gameplayShaders && FlxG.save.data.saturation) {
+    if(!Options.gameplayShaders || !FlxG.save.data.saturation) {
         disableScript();
         return;
     }

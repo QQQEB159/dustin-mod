@@ -78,6 +78,10 @@ function postCreate() {
     }
 
     FlxFlicker.flicker(flickerSprite, 9999999, 0.01);
+
+    if (FlxG.save.data.scrollSpeedChange) {
+        PlayState.instance.scrollSpeed = 2.4;
+    }
 }
 
 public var didDamage:Bool = false;
