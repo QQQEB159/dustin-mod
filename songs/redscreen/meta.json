@@ -1,14 +1,7 @@
 {
-	"opponentModeAllowed": true,
-	"difficulties": [
-		"hard"
-	],
-	"icon": "Icon",
-	"coopAllowed": true,
-	"name": "redscreen",
-	"color": "#FFFFFF",
 	"customValues": {
-		"customName": "rEdscreen",
+		"customName": "redscReen",
+		"titleCardSubtext": "* by Audieun/pause(0.5)/\n* ft. Ug32T & Zeroh",
 		"credits": {
 			"CHART": "GOJIMANPLAYS",
 			"BACKGROUND": "KAIKIN",
@@ -19,11 +12,17 @@
 			"isMonster": false,
 			"quote": "Leave this world.",
 			"song": "redscreen",
-			"sound": "chara"
+			"sound": "dustshift_chara"
 		},
-		"stats": "* CHARA 78 ATK 54 DEF\n* The first fallen.\n* They look calm.",
-		"titleCardSubtext": "* by Audieun/pause(0.5)/\n* ft. Ug32T & Zeroh"
+		"stats": "* CHARA 78 ATK 54 DEF\n* The first fallen.\n* They look calm."
 	},
+	"color": "#FFFFFF",
+	"opponentModeAllowed": true,
+	"difficulties": [
+		"hard"
+	],
+	"icon": "Icon",
+	"coopAllowed": true,
 	"stepsPerBeat": 4,
 	"displayName": "Redscreen",
 	"beatsPerMeasure": 4,

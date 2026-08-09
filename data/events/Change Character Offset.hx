@@ -1,4 +1,6 @@
 //
+import funkin.editors.charter.Charter;
+
 var characterTweens:Map<Int, Array<FlxTween>> = [];
 
 function onEvent(eventEvent) {
@@ -7,7 +9,7 @@ function onEvent(eventEvent) {
         var flxease:String = params[5] + (params[5] == "linear" ? "" : params[6]);
 
         var character:Character = strumLines.members[params[1]].characters[0];
-        if (params[0]) {
+        if (params[0] && !(PlayState.chartingMode && Charter.startHere && eventEvent.event.time < Charter.startTime)) {
             if (characterTweens[params[1]] != null)
                 for (tween in characterTweens[params[1]])
                     if (tween != null) tween.cancel();

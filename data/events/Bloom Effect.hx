@@ -1,7 +1,7 @@
 public var bloom:CustomShader = null;
 
 function create() {
-    if(!Options.gameplayShaders || !FlxG.save.data.bloom) {
+    if(!Options.gameplayShaders && FlxG.save.data.bloom) {
         disableScript();
         return;
     }
@@ -20,7 +20,7 @@ function onEvent(eventEvent) {
     var params:Array = eventEvent.event.params;
     if (eventEvent.event.name == "Bloom Effect") {
         if (params[0] == false)
-            setBloom(params[1]);
+            setBloom(params[1] * (FlxG.save.data.epilflashingepsy ? .25 : 1));
         else {
             if (bloomTween != null) bloomTween.cancel();
             var flxease:String = params[3] + (params[3] == "linear" ? "" : params[4]);

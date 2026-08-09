@@ -1,7 +1,10 @@
 //
 import funkin.game.cutscenes.VideoCutscene;
 
+menuType = "default";
 var name:String = null;
+var script;
+
 function onOpenSubState(e) if (e.substate is VideoCutscene) {
     e.cancelled = true;
     subState = null;
@@ -16,11 +19,12 @@ function onOpenSubState(e) if (e.substate is VideoCutscene) {
 
 function finishDustin() {
     script.destroy();
+
     if (dustCall != null) dustCall();
 
     if (name == "assets/videos/the-uprising-end-cutscene.mp4")
         FlxG.switchState(new ModState("EndingCredits", "genocide"));
 
-    if (name == "assets/videos/you-are-end-cutscene.mp4")
+    else if (name == "assets/videos/you-are-end-cutscene.mp4")
         FlxG.switchState(new ModState("EndingCredits", "pacifist"));
 }

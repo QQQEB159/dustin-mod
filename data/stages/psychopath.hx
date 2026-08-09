@@ -32,10 +32,17 @@ function create() {
 
     backCam = new FlxCamera(0, 0, 1280, 720);
     backCam.bgColor = 0x00000000;
-    if (Options.gameplayShaders && FlxG.save.data.bloom) backCam.addShader(blooming);
-    if (Options.gameplayShaders && FlxG.save.data.water) backCam.addShader(water);
-    if (Options.gameplayShaders && FlxG.save.data.pixel) backCam.addShader(pixel);
-    if (Options.gameplayShaders && FlxG.save.data.static) backCam.addShader(tape_noise);
+
+    redShader = new CustomShader("rederShader");
+
+    if (Options.gameplayShaders) {
+        if (FlxG.save.data.bloom) backCam.addShader(blooming);
+        if (FlxG.save.data.water) backCam.addShader(water);
+        if (FlxG.save.data.pixel) backCam.addShader(pixel);
+        if (FlxG.save.data.static) backCam.addShader(tape_noise);
+
+        boyfriend.shader = redShader;
+    }
 
 
     FlxG.cameras.remove(camGame, false);
@@ -46,9 +53,6 @@ function create() {
     FlxG.cameras.add(camHUD2, false);
 
     BG.camera = backCam;
-
-    redShader = new CustomShader("rederShader");
-    if (Options.gameplayShaders) boyfriend.shader = redShader;
 }
 
 function postCreate() {
@@ -106,8 +110,10 @@ function stepHit(step:Int) {
             bgBeat = false;
             BG.visible = false;
             FG.visible = false;
-            if (Options.gameplayShaders) boyfriend.shader = redShader;
-            if (Options.gameplayShaders) dad.shader = redShader;
+            if (Options.gameplayShaders) {
+                boyfriend.shader = redShader;
+                dad.shader = redShader;
+            }
             backCam.bgColor = 0xFF000000;
             blooming.size = 0;
             blooming.brightness = 1;

@@ -66,6 +66,7 @@ var idealBoxAngle:Int = 0;
 var idealBoxSpeed:Float = 1;
 
 public function box_open_animation() {
+    player.ghostTapping = true;
     undertaleUpdateActive = true;
     FlxTween.num(0, 1, 1, null, (val:Float) -> {
         soulSprite.alpha = Math.floor(val*10)/10;
@@ -95,6 +96,7 @@ public function box_close_animation() {
     new FlxTimer().start(.67, function () {
         FlxTween.tween(battleBox, {alpha:0}, .4);
         undertaleUpdateActive = false;
+        player.ghostTapping = Options.ghostTapping;
     });
 }
 

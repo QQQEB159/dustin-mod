@@ -11,6 +11,8 @@ import flixel.tweens.FlxTweenType;
 import flixel.tweens.FlxEase;
 import flixel.math.FlxMath;
 
+importScript("data/scripts/galleryBG");
+
 var images:Array<String>;
 var curSelected:Int = 0;
 static var galleryMusicStarted:Bool = false;
@@ -38,6 +40,9 @@ var infX:Float, infY:Float;
 
 
 function create():Void {
+
+    createGalleryBG();
+    
     var raw = Assets.getText(Paths.json("config/songstuff"));
     var data = Json.parse(raw);
     var imageNames = [];

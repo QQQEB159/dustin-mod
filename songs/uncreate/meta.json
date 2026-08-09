@@ -5,6 +5,7 @@
 		"hard"
 	],
 	"customValues": {
+		"customName": "uncrReate",
 		"credits": {
 			"SPRITES": "SAMUEL PASTEL, INKSUS",
 			"BACKGROUND": "NEF",
@@ -13,7 +14,7 @@
 		},
 		"gameover": {
 			"quote": "jJuSt lEav3 mE al0Ne!",
-			"isMonster": true,
+			"isMonster": null,
 			"sound": "sans",
 			"song": "uncreate"
 		},

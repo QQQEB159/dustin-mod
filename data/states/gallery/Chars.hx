@@ -33,6 +33,7 @@ var changeCooldown:Float = 0;
 var changeCooldownTime:Float = 0.3;
 
 function create() {
+
     var raw = Assets.getText(Paths.json("config/charstuff"));
     aus = Json.parse(raw);
 
@@ -65,7 +66,7 @@ function create() {
     authorsLabel.setFormat(Paths.font("8bit-jve.ttf"), 50, FlxColor.WHITE, FlxTextAlign.LEFT);
     add(authorsLabel);
 
-    descText = new FlxText(230, 130, 500, "", 25, true);
+    descText = textCrispy(new FlxText(230, 130, 500, "", 25, true));
     descText.setFormat(Paths.font("8bit-jve.ttf"),25,FlxColor.WHITE,FlxTextAlign.LEFT);
     descText.wordWrap = true;
     add(descText);
@@ -109,10 +110,8 @@ function createAuBox(x,y) {
     return b;
 }
 function createAuText(x,y,str,size) {
-    var t = new FlxText(x,y,140,str,size,true);
+    var t = textCrispy(new FlxText(x,y,140,str,size,true));
     t.setFormat(Paths.font("8bit-jve.ttf"),size,FlxColor.WHITE,FlxTextAlign.CENTER);
-    t.textField.antiAliasType = 0/*ADVANCED*/;
-	t.textField.sharpness = 400/*MAX ON OPENFL*/;
     add(t);
     return t;
 }

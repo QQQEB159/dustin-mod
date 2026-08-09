@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sixbones_3.png">
+	<!-- Created with Adobe Animate version 24.0.14.24 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="down_four0000" x="0" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0001" x="0" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0002" x="1021" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0003" x="1021" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0004" x="1021" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0005" x="1021" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0006" x="2042" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0007" x="2042" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0008" x="2042" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0009" x="2042" y="0" width="1006" height="1113"/>
+	<SubTexture name="down_four0010" x="2042" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0000" x="3063" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0001" x="3063" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0002" x="3063" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0003" x="3063" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0004" x="3063" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0005" x="4084" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0006" x="4084" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0007" x="4084" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0008" x="4084" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0009" x="4084" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0010" x="5105" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0011" x="5105" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0012" x="5105" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0013" x="5105" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0014" x="5105" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0015" x="6126" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0016" x="6126" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0017" x="6126" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0018" x="6126" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0019" x="6126" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0020" x="7147" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0021" x="7147" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0022" x="7147" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0023" x="7147" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0024" x="7147" y="0" width="1006" height="1113"/>
+	<SubTexture name="idle_three0025" x="0" y="1128" width="1006" height="1113"/>
+	<SubTexture name="idle_three0026" x="0" y="1128" width="1006" height="1113"/>
+	<SubTexture name="idle_three0027" x="0" y="1128" width="1006" height="1113"/>
+	<SubTexture name="idle_three0028" x="0" y="1128" width="1006" height="1113"/>
+	<SubTexture name="idle_three0029" x="0" y="1128" width="1006" height="1113"/>
+	<SubTexture name="idle_three0030" x="0" y="1128" width="1006" height="1113"/>
+	<SubTexture name="jscare_loop0000" x="1021" y="1128" width="1192" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0001" x="1021" y="1128" width="1192" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0002" x="2228" y="1128" width="1185" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0003" x="3428" y="1128" width="1199" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0004" x="3428" y="1128" width="1199" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0005" x="4642" y="1128" width="1189" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0006" x="5846" y="1128" width="1197" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0007" x="5846" y="1128" width="1197" height="1163" frameX="0" frameY="0" frameWidth="1201" frameHeight="1163"/>
+	<SubTexture name="jscare_loop0008" x="0" y="2306" width="1201" height="1163"/>
+	<SubTexture name="jscare_transition0000" x="1216" y="2306" width="1157" height="1163" frameX="0" frameY="0" frameWidth="1182" frameHeight="1163"/>
+	<SubTexture name="jscare_transition0001" x="1216" y="2306" width="1157" height="1163" frameX="0" frameY="0" frameWidth="1182" frameHeight="1163"/>
+	<SubTexture name="jscare_transition0002" x="2388" y="2306" width="1157" height="1163" frameX="0" frameY="0" frameWidth="1182" frameHeight="1163"/>
+	<SubTexture name="jscare_transition0003" x="2388" y="2306" width="1157" height="1163" frameX="0" frameY="0" frameWidth="1182" frameHeight="1163"/>
+	<SubTexture name="jscare_transition0004" x="3560" y="2306" width="1157" height="1163" frameX="0" frameY="0" frameWidth="1182" frameHeight="1163"/>
+	<SubTexture name="jscare_transition0005" x="3560" y="2306" width="1157" height="1163" frameX="0" frameY="0" frameWidth="1182" frameHeight="1163"/>
+	<SubTexture name="jscare_transition0006" x="4732" y="2306" width="1182" height="1163"/>
+	<SubTexture name="left_four0000" x="5929" y="2306" width="1006" height="1113"/>
+	<SubTexture name="left_four0001" x="5929" y="2306" width="1006" height="1113"/>
+	<SubTexture name="left_four0002" x="6950" y="2306" width="1006" height="1113"/>
+	<SubTexture name="left_four0003" x="6950" y="2306" width="1006" height="1113"/>
+	<SubTexture name="left_four0004" x="6950" y="2306" width="1006" height="1113"/>
+	<SubTexture name="left_four0005" x="6950" y="2306" width="1006" height="1113"/>
+	<SubTexture name="left_four0006" x="0" y="3484" width="1006" height="1113"/>
+	<SubTexture name="left_four0007" x="0" y="3484" width="1006" height="1113"/>
+	<SubTexture name="left_four0008" x="0" y="3484" width="1006" height="1113"/>
+	<SubTexture name="left_four0009" x="0" y="3484" width="1006" height="1113"/>
+	<SubTexture name="left_four0010" x="0" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0000" x="1021" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0001" x="1021" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0002" x="2042" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0003" x="2042" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0004" x="2042" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0005" x="2042" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0006" x="3063" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0007" x="3063" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0008" x="3063" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0009" x="3063" y="3484" width="1006" height="1113"/>
+	<SubTexture name="right_four0010" x="3063" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0000" x="4084" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0001" x="4084" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0002" x="5105" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0003" x="5105" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0004" x="5105" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0005" x="5105" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0006" x="6126" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0007" x="6126" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0008" x="6126" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0009" x="6126" y="3484" width="1006" height="1113"/>
+	<SubTexture name="up_four0010" x="6126" y="3484" width="1006" height="1113"/>
+</TextureAtlas>

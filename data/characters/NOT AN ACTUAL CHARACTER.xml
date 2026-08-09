@@ -1,0 +1,28 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="idutshane" antialiasing="false" icon="NOT AN ACTUAL CHARACTER">
+	<anim name="idle" anim="red"/>
+	<anim name="singDOWN" anim="arrowDOWN"/>
+	<anim name="singRIGHT" anim="arrowRIGHT"/>
+	<anim name="singLEFT" anim="arrowLEFT"/>
+	<anim name="singUP" anim="arrowUP"/>
+	<anim name="red" anim="red0"/>
+	<anim name="blue" anim="blue0"/>
+	<anim name="green" anim="green0"/>
+	<anim name="purple" anim="purple0"/>
+	<anim name="up press" anim="up press"/>
+	<anim name="down press" anim="down press"/>
+	<anim name="left press" anim="left press"/>
+	<anim name="up confirm" anim="up confirm"/>
+	<anim name="right press" anim="right press"/>
+	<anim name="down confirm" anim="down confirm"/>
+	<anim name="left confirm" anim="left confirm"/>
+	<anim name="right confirm" anim="right confirm"/>
+	<anim name="green hold end" anim="green hold end"/>
+	<anim name="red hold piece" anim="red hold piece"/>
+	<anim name="blue hold piece" anim="blue hold piece"/>
+	<anim name="pruple end hold" anim="pruple end hold"/>
+	<anim name="green hold piece" anim="green hold piece"/>
+	<anim name="purple hold piece" anim="purple hold piece"/>
+	<anim name="red hold end" anim="red hold end"/>
+	<anim name="blue hold end" anim="blue hold end"/>
+</character>

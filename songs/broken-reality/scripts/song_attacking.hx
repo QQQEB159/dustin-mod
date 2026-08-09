@@ -1,7 +1,11 @@
 //
+import funkin.editors.charter.Charter;
+
+
 import flixel.text.FlxTextBorderStyle;
 import flixel.effects.FlxFlicker;
 
+var target_flip:Int = -1;
 var target:FlxSprite;
 var target_choice:FlxSprite;
 var target_text:FlxText;
@@ -35,15 +39,12 @@ function postCreate() {
     target_choice.visible = false;
     insert(9999, target_choice);
 
-    target_text = new FlxText(0, 0, 0, "PRESS SPACE!");
+    target_text = textCrispy(new FlxText(0, 0, 0, "PRESS SPACE!"));
     target_text.setFormat(Paths.font("DTM-Mono.ttf"), 16, fullColor);
 
     target_text.borderStyle = FlxTextBorderStyle.OUTLINE;
     target_text.borderSize = 2;
     target_text.borderColor = 0xFF000000;
-
-    target_text.textField.antiAliasType = 0/*ADVANCED*/;
-    target_text.textField.sharpness = 400/*MAX ON OPENFL*/;
 
     target_text.alpha = 0;
     target_text.cameras = [camHUD];
@@ -54,7 +55,8 @@ function postCreate() {
     flickerSprite.zoomFactor = 0;
     flickerSprite.cameras = [camHUD2];
     flickerSprite.alpha = 0;
-    add(flickerSprite);
+    if(!FlxG.save.data.antiFlash)
+        add(flickerSprite);
 
     chromWarp = new CustomShader("chromaticWarp");
     chromWarp.distortion = 0;
@@ -65,11 +67,15 @@ function postCreate() {
     impact = new CustomShader("impact_frames");
     impact.threshold = -1;
 
-    if (Options.gameplayShaders && FlxG.save.data.impact) camGame.addShader(impact);
-    if (Options.gameplayShaders && FlxG.save.data.warp) camGame.addShader(warp);
-    if (Options.gameplayShaders && FlxG.save.data.chromwarp) camGame.addShader(chromWarp);
-    camGame.removeShader(bloom_new);
-    if (Options.gameplayShaders && FlxG.save.data.bloom) camGame.addShader(bloom_new);
+    if (Options.gameplayShaders) {
+        if (FlxG.save.data.impact) camGame.addShader(impact);
+        if (FlxG.save.data.warp) camGame.addShader(warp);
+        if (FlxG.save.data.chromwarp) camGame.addShader(chromWarp);
+        if (FlxG.save.data.bloom) {
+            camGame.removeShader(bloom_new);
+            camGame.addShader(bloom_new);
+        }
+    }
 
     FlxFlicker.flicker(flickerSprite, 9999999, 0.01);
 }
@@ -82,9 +88,12 @@ var desiredY:Float = 15;
 var targetDesiredX:Float = 0;
 var inAttack:Bool = false;
 function doAttack() {
-    if (inAttack) return;
+    if (inAttack || (PlayState.chartingMode && Charter.startHere && FlxG.sound.music.time < Charter.startTime)) return;
     inAttack = true;
-    targetDesiredX = -.5; judgeRating = JUDGE_MISS;
+    attackerSpeed = FlxG.random.float(0.98, 1.25);
+    target_flip *= -1;
+    targetDesiredX = -.5;
+    judgeRating = JUDGE_MISS;
 
     target_choice.visible = false;
     target_choice.animation.stop();
@@ -237,7 +246,7 @@ function undertale_update(elapsed:Float) {
     target.x = FlxG.width/2 - target.width/2;
     target.y = dustinHealthBar.y - 89.5 + (tY = FlxMath.lerp(tY, desiredY, FlxEase.sineIn(.42)));
 
-    target_choice.x = target.x + (target.frameWidth*targetDesiredX) - target_choice.width/2;
+    target_choice.x = target.x + (target.frameWidth*(targetDesiredX * target_flip)) - target_choice.width/2;
     target_choice.y = target.y;
 
     target_text.x = target.x - target_text.fieldWidth/2;

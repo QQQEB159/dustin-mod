@@ -21,8 +21,7 @@ function postCreate() {
         txt.borderSize = 2;
         txt.borderColor = 0xFF000000;
 
-        txt.textField.antiAliasType = 0/*ADVANCED*/;
-        txt.textField.sharpness = 400/*MAX ON OPENFL*/;
+        textCrispy(txt);
 
         hudElements.push(txt);
     }
@@ -138,7 +137,7 @@ function createRatingSprite():FlxSprite {
     comboSprite.animation.addByPrefix("sick", "sick", 1, true);
     comboSprite.animation.play("good", true);
 
-    comboSprite.scrollFactor.set();
+    //comboSprite.scrollFactor.set();
 
     comboSprite.scale.set(ratingScale, ratingScale);
     comboSprite.updateHitbox();
