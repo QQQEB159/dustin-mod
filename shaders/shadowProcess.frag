@@ -73,20 +73,20 @@ void main() {
 
 	// bolden the width stuff
 	if (boldSkewWidth) {
-		float num = floor((skewWidth / 8.0) + 0.5);
-		float yShit = cutY - mainUV.y;
-		for (int pass = 0; pass < num; pass++) {
-			float v = pass / num;
+	int num = int(floor((skewWidth / 8.0) + 0.5));
+	float yShit = cutY - mainUV.y;
+	for (int pass = 0; pass < num; pass++) {
+		float v = float(pass) / float(num);
 
-			uv = mainUV - vec2(0.5, 1.0);
-			uv.x *= 1.0 + widthStuff;
-			uv.x += widthStuff * (-0.5 + v) * yShit;
-			uv.y /= sin((0.375 + v * 0.3125) * PI) * 0.5 + 0.5;
-			uv += waveUV * yShit + vec2(0.5, 1.0);
+		uv = mainUV - vec2(0.5, 1.0);
+		uv.x *= 1.0 + widthStuff;
+		uv.x += widthStuff * (-0.5 + v) * yShit;
+		uv.y /= sin((0.375 + v * 0.3125) * PI) * 0.5 + 0.5;
+		uv += waveUV * yShit + vec2(0.5, 1.0);
 
-			shadow += frameTexture2D(uv).a;
-		}
-		shadow = min(shadow * pow(yShit, 0.5), 1.0);
+		shadow += frameTexture2D(uv).a;
+	}
+	shadow = min(shadow * pow(yShit, 0.5), 1.0);
 	}
 	else {
 		shadow = frameTexture2D(uv + waveUV * (cutY - mainUV.y) + 0.5).a;

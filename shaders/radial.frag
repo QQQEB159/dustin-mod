@@ -4,7 +4,7 @@
 uniform float blur;
 uniform vec2 center;
 
-const int nsamples = 15;
+const int nsamples = 12;
 
 void main()
 {
@@ -12,7 +12,7 @@ void main()
     uv -= center;
 
     vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
-    if (blur <= 0) {
+    if (blur <= 0.0) {
         gl_FragColor = color;
         return;
     }
