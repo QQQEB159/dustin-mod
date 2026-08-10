@@ -5,7 +5,7 @@
 uniform float iTime;
 uniform float strengthMulti;
 
-const float maxStrength = .5;
+const float maxStrength = 0.5;
 const float minStrength = 0.3;
 
 const float speed = 2.00;

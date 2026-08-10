@@ -5,11 +5,11 @@ uniform vec3 color;
 uniform float ratio;
 
 float brightness(vec3 color) {
-    return (color.r + color.g + color.b)/3.;
+    return (color.r + color.g + color.b)/3.0;
 }
 
 vec3 lerpcolor(vec3 color, vec3 lerpColor, float ratio) {
-    vec3 newColor = vec3(0., 0., 0.);
+    vec3 newColor = vec3(0.0, 0.0, 0.0);
     newColor.r = mix(color.r, lerpColor.r, ratio);
     newColor.g = mix(color.g, lerpColor.g, ratio);
     newColor.b = mix(color.b, lerpColor.b, ratio);

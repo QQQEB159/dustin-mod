@@ -17,44 +17,31 @@ uniform float INTENSITY;
 
 // Noise functions from the fog shader
 float random(vec2 st) {
-    return fract(sin(dot(st.xy, vec2(12.9818,79.279)))*43758.5453123);
+    return fract(sin(dot(st.xy, vec2(12.9818, 79.279))) * 43758.5453123);
 }
 
-vec2 random2(vec2 st){
-    st = vec2(dot(st,vec2(127.1,311.7)), dot(st,vec2(269.5,183.3)));
+vec2 random2(vec2 st) {
+    st = vec2(dot(st, vec2(127.1, 311.7)), dot(st, vec2(269.5, 183.3)));
     return -1.0 + 2.0 * fract(sin(st) * 43759.34517123);
 }
 
 float noise(vec2 st) {
     vec2 i = floor(st);
     vec2 f = fract(st);
+    vec2 u = f * f * (3.0 - 2.0 * f);
 
-    // smootstep
-    vec2 u = f*f*(3.0-2.0*f);
-
-    return mix(mix(dot(random2(i + vec2(0.0,0.0)), f - vec2(0.0,0.0)),
-               dot(random2(i + vec2(1.0,0.0)), f - vec2(1.0,0.0)), u.x),
-           mix(dot(random2(i + vec2(0.0,1.0)), f - vec2(0.0,1.0)),
-               dot(random2(i + vec2(1.0,1.0)), f - vec2(1.0,1.0)), u.x), u.y);
-}
-
-float fractal_brownian_motion(vec2 coord) {
-    float value = 0.0;
-    float scale = 0.5;
-    for (int i = 0; i < OCTAVES; i++) {
-        value += noise(coord) * scale;
-        coord *= 2.0;
-        scale *= 0.5;
-    }
-    return value + 0.2;
+    return mix(
+        mix(dot(random2(i + vec2(0.0, 0.0)), f - vec2(0.0, 0.0)),
+            dot(random2(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0)), u.x),
+        mix(dot(random2(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0)),
+            dot(random2(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0)), u.x), u.y);
 }
 
 float brightness(vec3 color) {
     return (color.r + color.g + color.b) / 3.0;
 }
 
-void main()
-{
+void main() {
     vec4 col = flixel_texture2D(bitmap, openfl_TextureCoordv.xy);
     
     vec2 screenSize = openfl_TextureSize.xy;
@@ -63,37 +50,46 @@ void main()
     ndc /= cameraZoom;
     vec2 zoomedScreenCoord = (ndc + 1.0) * 0.5 * res;
     vec2 worldCoord = zoomedScreenCoord + cameraPosition;
-    
+
     vec2 st = worldCoord.xy / res.xy;
-    st *= res.xy / res.y;    
+    st *= res.xy / res.y;
     vec2 pos = vec2(st * ZOOM);
-    
-    vec2 motion = vec2(fractal_brownian_motion(pos + vec2(time * -0.2, time * -0.2)));
-    float fogAmount = fractal_brownian_motion(pos + motion) * INTENSITY;
-    
+
+    float fogAmount = 0.0;
+    float scale = 0.5;
+    vec2 coord = pos + vec2(time * -0.2, time * -0.2);
+    for (int i = 0; i < OCTAVES; i++) {
+        fogAmount += noise(coord) * scale;
+        coord *= 2.0;
+        scale *= 0.5;
+    }
+    fogAmount = (fogAmount + 0.2) * INTENSITY;
+
+    float feather = float(FEATHER);
+
+    // Main fog area
     if (worldCoord.y <= applyY && worldCoord.y >= applyY - applyRange) {
         float dist = applyY - worldCoord.y;
         float gradient = 1.0 - (dist / applyRange);
+
+        vec3 effect = mix(BG, FOG_COLOR, fogAmount * gradient) * (gradient * fogAmount);
+        col.rgb += effect;
+
+        if (col.a == 0.0 && (effect.r > 0.0 || effect.g > 0.0 || effect.b > 0.0))
+		    col.a = brightness(effect);
+    }
+
+    // Feather transition
+    if (worldCoord.y <= applyY + feather && worldCoord.y >= applyY) {
+        float dist = (applyY + feather) - worldCoord.y;
+        float gradient = dist / feather;
         
-        vec3 fogEffect = mix(BG, FOG_COLOR, fogAmount * gradient);
-        vec3 effect = fogEffect * vec3(gradient * fogAmount, gradient * fogAmount, gradient * fogAmount);
+        vec3 effect = mix(BG, FOG_COLOR, fogAmount * gradient) * (gradient * fogAmount);
         col.rgb += effect;
-
-        if (col.a == 0 && (effect.r > 0. || effect.g > 0. || effect.b > 0.))
+        
+        if (col.a == 0.0 && (effect.r > 0.0 || effect.g > 0.0 || effect.b > 0.0))
 		    col.a = brightness(effect);
     }
 
-    if (worldCoord.y <= applyY+FEATHER && worldCoord.y >= applyY) {
-        float dist = (applyY+FEATHER) - worldCoord.y;
-        float gradient = (dist / FEATHER);
-
-        vec3 fogEffect = mix(BG, FOG_COLOR, fogAmount * gradient);
-        vec3 effect = fogEffect * vec3(gradient * fogAmount, gradient * fogAmount, gradient * fogAmount);
-        col.rgb += effect;
-
-        if (col.a == 0 && (effect.r > 0. || effect.g > 0. || effect.b > 0.))
-		    col.a = brightness(effect);
-    }
-    
     gl_FragColor = col;
 }
