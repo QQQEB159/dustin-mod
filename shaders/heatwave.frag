@@ -20,11 +20,11 @@ void main() {
     p_d.t += (time * 0.1) * speed;
 
     p_d = mod(p_d, 1.0);
-    vec4 dst_map_val = vec4(noise(p_d * vec2(50)));
+    vec4 dst_map_val = vec4(noise(p_d * vec2(50.0)));
     
     vec2 dst_offset = dst_map_val.xy;
-    dst_offset -= vec2(.5,.5);
-    dst_offset *= 2.;
+    dst_offset -= vec2(0.5,0.5);
+    dst_offset *= 2.0;
     dst_offset *= (0.01 * strength);
 	
     //reduce effect towards Y top

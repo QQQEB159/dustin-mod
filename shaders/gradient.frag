@@ -8,7 +8,7 @@ uniform float applyRange;
 uniform float applyY;
 
 float brightness(vec3 color) {
-    return (color.r + color.g + color.b)/3.;
+    return (color.r + color.g + color.b)/3.0;
 }
 
 void main()
@@ -39,11 +39,11 @@ void main()
         float dist = applyY - worldCoord.y;
         gradient = 1.0 - (dist / applyRange);
 
-        vec3 bottomColor = vec3(0., 0., 0.); 
-        vec3 topColor = vec3(166./255., 185./255., 189./255.)*1.3;    
+        vec3 bottomColor = vec3(0.0, 0.0, 0.0); 
+        vec3 topColor = vec3(166.0/255.0, 185.0/255.0, 189.0/255.0)*1.3;    
         vec3 gradientCol = mix(bottomColor, topColor, gradient);
 
-        col += vec4(gradientCol*2, 1.0)*(gradient*.06) *col.a;
+        col += vec4(gradientCol*2.0, 1.0)*(gradient*0.06) *col.a;
     }
 
     gl_FragColor = col;
