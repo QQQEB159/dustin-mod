@@ -110,6 +110,11 @@ function create() {
     heart.antialiasing = false;
     heart.visible = false;
     add(heart);
+
+    #if mobile
+    addMobilePad('UP_DOWN', 'A');
+    addMobilePadCamera();
+    #end
 }
 
 function showLine() {
@@ -210,13 +215,13 @@ function update(elapsed:Float) {
     }
 
     if (dialogueFinished) {
-        if (!leaving && FlxG.keys.justPressed.ESCAPE)
+        if (!leaving && FlxG.mouse.justPressed)
             leaveState();
         return;
     }
 
     if (!dialogueStarted) {
-        if (FlxG.keys.justPressed.ANY) {
+        if (FlxG.mouse.justPressed) {
             dialogueStarted = true;
             dialogueBox.visible = true;
             dialoguePrefix.visible = true;

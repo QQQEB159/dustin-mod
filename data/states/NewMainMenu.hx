@@ -269,7 +269,9 @@ function update(elapsed:Float):Void {
         }
     }
 
-    if (!clickedEgg && (firstIntro ? !intro : true) && (controls.ACCEPT || FlxG.mouse.justPressed) && canSelect) select();
+    if (!clickedEgg && (firstIntro ? !intro : true) && canSelect) {
+    if (controls.ACCEPT) select();
+    if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(options[curSelected.y])) select();}
 
     if (Options.devMode && FlxG.keys.justPressed.SEVEN) {
         persistentUpdate = false;

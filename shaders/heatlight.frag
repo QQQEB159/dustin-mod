@@ -24,9 +24,9 @@ vec4 preproccess_tex(vec2 uv) {
 // Algorithm found in https://medium.com/community-play-3d/god-rays-whats-that-5a67f26aeac2
 vec4 crepuscular_rays(vec2 texCoords, vec2 pos) {
     float decay = 0.83;
-    float density = 0.28;
+    float density = 0.32;
 
-    float weight = 0.29 + sin(time)*0.02; 
+    float weight = 0.21 + sin(time)*0.02; 
 
     vec2 tc = texCoords.xy;
     vec2 deltaTexCoord = tc - pos.xy;
