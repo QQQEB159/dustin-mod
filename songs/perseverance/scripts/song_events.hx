@@ -347,7 +347,7 @@ function stepHit(step:Int) {
 
             if (Options.gameplayShaders) {
                 camForeground.addShader(screenVignette);
-                camCharacters.addShader(snowShader2);
+                if (FlxG.save.data.particles) camCharacters.addShader(snowShader2);
             }
 
             snowShader2.snowMelts = true;
