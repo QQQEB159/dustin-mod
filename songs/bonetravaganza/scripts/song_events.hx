@@ -128,8 +128,8 @@ function update(elapsed:Float) {
 
         holdCircle = null;
         skipText = null;
-    } else if (!canSkip && inst.time > 25600 && curVideo != null && curVideo.bitmap.time < 25600 - 8697) {
-        curVideo.bitmap.time = 25600 - 8697;
+    } else if (!canSkip && inst.time > 25600 && curVideo != null && curVideo?.bitmap?.time < 25600 - 8697) {
+        curVideo?.bitmap?.time = 25600 - 8697;
     }
 }
 

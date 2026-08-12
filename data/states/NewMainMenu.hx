@@ -14,6 +14,7 @@ import flixel.text.FlxText.FlxTextBorderStyle;
 import funkin.backend.utils.HttpUtil;
 import funkin.backend.system.Controls;
 import openfl.Lib;
+import mobile.funkin.backend.utils.TouchUtil;
 
 var background:FunkinSprite;
 var logo:FunkinSprite;
@@ -82,6 +83,39 @@ var blockInput:Bool = false;
 
 //Depending on what ending you got in storymode
 static var menuType:String = "default";
+
+var keyboard:FunkinSprite;
+var curCode:String = '';
+
+function handleCode(str:String)
+{
+	curCode += str.toLowerCase();
+	
+	if (curCode == "qqqeb")
+	{
+		curCode = '';
+		if (FlxG.save.data.dustinBeatEverything) return;
+		FlxG.save.data.dustinBoughtStuff = [ "mirror key", "wrath key", "guilty key", "virus key" ];
+        var songsList:Array<String> = [for (song in Paths.getFolderDirectories('songs', false, 1)) song.toLowerCase()];
+        
+        for (song in songsList) 
+        {
+            FunkinSave.setSongHighscore(song, "hard", null, {
+                score: 1,
+                misses: 0,
+                accuracy: 0,
+                hits: [],
+                date: ""
+            }, []);
+        }
+        
+        update_dustin_scores();
+        FlxG.save.data.dustinBeatEverything = true;
+        FlxG.save.flush();
+        FunkinSave.flush();
+        FlxG.resetState();
+	}
+}
 
 function create() {
     //FlxG.save.data.EggOne = true;
@@ -227,6 +261,13 @@ function create() {
     //         }
     //     });
     // }
+    
+    keyboard = new FunkinSprite(1080, 20, Paths.image("keyboard"));
+	keyboard.scale.set(0.4, 0.4);
+	keyboard.updateHitbox();
+	add(keyboard);
+	//keyboard.camera = camHUD;
+	FlxG.stage.window.onTextInput.add(handleCode);
 }
 var fadeInTimer:Float = 0;
 var fadeInDuration:Float = 2.5;
@@ -290,6 +331,12 @@ function update(elapsed:Float):Void {
         }
     }
 
+    if (TouchUtil.overlaps(keyboard) && TouchUtil.justPressed && keyboard.visible)
+	{
+        FlxG.stage.window.textInputEnabled = true;
+		curCode = '';
+	}
+    
     if (Options.devMode && FlxG.keys.justPressed.SEVEN) {
         persistentUpdate = false;
         persistentDraw = true;
@@ -470,4 +517,5 @@ function onMouseMoved(?x:Float = 0, ?y:Float = 0) {
 
 function destroy() {
     Lib.application.window.onMouseMove.remove(onMouseMoved);
+    FlxG.stage.window.onTextInput.remove(handleCode);
 }
