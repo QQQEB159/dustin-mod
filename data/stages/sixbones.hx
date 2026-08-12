@@ -9,6 +9,7 @@ import flixel.text.FlxTextBorderStyle;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxTimer;
+import funkin.backend.MusicBeatState;
 
 import funkin.backend.FunkinText;
 
@@ -796,7 +797,7 @@ function stepHit(curStep:Int)
                 failurePhraseText.visible = false;
 
         case 274:
-            stageOverlayShader.amount = 255.0 / 255.0;
+            if (Options.gameplayShaders) stageOverlayShader.amount = 255.0 / 255.0;
 
         case 476:
             cameraEnemyOffsetY = 0;
@@ -1444,7 +1445,7 @@ function updateShootQuickTimeEvent(elapsed:Float)
 
     var shouldShoot:Bool =
         !FlxG.save.data.mechanics ||
-        FlxG.keys.justPressed.SPACE;
+        FlxG.keys.justPressed.SPACE || MusicBeatState.getState().mobileControls.instance.buttonExtra.justPressed;
 
     if (insideHitWindow && shouldShoot)
     {
@@ -2043,6 +2044,10 @@ function postCreate()
         remove(death_face, false);
         add(death_face);
     }
+    
+    if (FlxG.save.data.mechanics) enableSpaceBar(true);
+    else enableSpaceBar(false);
+    setMobileControlsColor(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF);
 }
 
 function cancelLookAroundEffects()
@@ -2550,6 +2555,7 @@ function activateLookAround(active:Bool)
 
     lookAroundInitialized = true;
     lookAroundActive = active;
+    mobileControls.instance.visible = !active;
     lookAroundMouseInsideRoomHitbox = false;
     warningFlipTimer = 0.0;
 

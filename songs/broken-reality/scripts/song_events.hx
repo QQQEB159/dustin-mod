@@ -72,7 +72,7 @@ function postCreate() {
     ogTimeCol = timeBarColors;
     ogCol1 = healthBarColors[0];
 
-    add(skipText = textCrispy(new FunkinText(-28, FlxG.height - 50 - 6, FlxG.width, "Hold SPACE/LEFT CLICK to skip...").setFormat(Paths.font('8bit-jve.ttf'), 32, 0xffffffff, "right", FlxTextBorderStyle.OUTLINE, 0xff000000)));
+    add(skipText = textCrispy(new FunkinText(-28, FlxG.height - 50 - 6, FlxG.width, "Tap and hold to skip...").setFormat(Paths.font('8bit-jve.ttf'), 32, 0xffffffff, "right", FlxTextBorderStyle.OUTLINE, 0xff000000)));
     skipText.scrollFactor.set();
     skipText.borderSize = 3;
     skipText.cameras = [videoCam];
@@ -109,10 +109,12 @@ function skipCutscene() {
         vocals.resume(); inst.resume();
     }
     canSkip = false;
+    mobileControls.instance.visible = true;
 }
 
 function onSongStart() {
     canSkip = true;
+    mobileControls.instance.visible = false;
 }
 function onEvent(_) {
     var params:Array = _.event.params;
@@ -239,6 +241,8 @@ function stepHit(step:Int) {
     switch(step) {
         case 176:
             showTitleCard();
+        case 360:
+            mobileControls.instance.visible = true;
         case 436:
             camZoomLerpMult = .65;
         case 849:
@@ -254,6 +258,9 @@ function stepHit(step:Int) {
 
             stage.getSprite("paps_bg").visible = true;
             stage.getSprite("paps_fg").visible = true;
+            
+            enableSpaceBar(false);
+            setMobileControlsColor(0xFFF9393F, 0xFFF9393F, 0xFFF9393F, 0xFFF9393F);
 
             remove(dad);
             insert(members.indexOf(stage.stageSprites["paps_fg"]), dad);
@@ -319,6 +326,9 @@ function stepHit(step:Int) {
 
             stage.getSprite("paps_bg").visible = false;
             stage.getSprite("paps_fg").visible = false;
+            
+            enableSpaceBar(true);
+            setMobileControlsColor(0xFFBB90F4, 0xFFBB90F4, 0xFFBB90F4, 0xFFBB90F4);
 
             bfPos = null;
             createBFClone(bfPos2, 1.25);

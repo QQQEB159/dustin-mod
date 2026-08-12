@@ -16,6 +16,7 @@ static var gallerySelected:Int = 0;
 
 var curSelected:Int = 0;
 var prevSelected:Int = 0;
+var exitText:FunkinText;
 
 function create() {
     createGalleryBG();
@@ -47,6 +48,14 @@ function create() {
         optionTexts.push(txt);
     }
 
+    exitText = new FunkinText(0, 660, FlxG.width, "< EXIT", 46);
+    exitText.alignment = FlxTextAlign.LEFT;
+    exitText.setFormat(Paths.font("8bit-jve.ttf"), 46, FlxColor.WHITE, FlxTextAlign.LEFT);
+    exitText.fieldWidth = 150;
+    exitText.fieldHeight = 50;
+    exitText.updateHitbox();
+    add(exitText);
+    
     changeSelection(gallerySelected, true);
 }
 
@@ -87,7 +96,7 @@ function changeSelection(amt:Int = 0, force:Bool = false) {
 }
 
 function update(elapsed:Float):Void {
-    if (controls.BACK || controls.BACK) {
+    if (controls.BACK || (FlxG.mouse.overlaps(exitText) && FlxG.mouse.justReleased)) {
         galleryMusicStarted = false;
         curSelected = 0;
         FlxG.sound.music.stop();
@@ -109,8 +118,16 @@ function update(elapsed:Float):Void {
         }
     }
 
-    if (FlxG.keys.justPressed.ENTER || FlxG.mouse.justPressed)
-        selectOption();
+    if (FlxG.keys.justPressed.ENTER) selectOption();
+    
+    if (FlxG.mouse.justPressed) {
+        for (a in optionTexts) {
+            if (FlxG.mouse.overlaps(a)) {
+                selectOption();
+                break;
+            }
+        }
+    }
 }
 
 function selectOption() {

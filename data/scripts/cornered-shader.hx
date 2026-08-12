@@ -68,8 +68,11 @@ function enableSnow() {
     if (isOn) return; // prevent double activation
     isOn = true;
 
-    particleSprite.visible = true;
-    particleSprite.alpha = 1;
+    if (Options.gameplayShaders)
+    {
+        particleSprite.visible = true;
+        particleSprite.alpha = 1;
+    }
 
     if (Options.gameplayShaders && FlxG.save.data.particles) {
         particleSprite.shader = snowShader;

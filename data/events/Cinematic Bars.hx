@@ -6,8 +6,16 @@ var cinematicBarTween2:FlxTween = null;
 
 public var cinematicBar1:FunkinSprite = null;
 public var cinematicBar2:FunkinSprite = null;
+var screenWidth:Float = FlxG.width;
+var screenHeight:Float = FlxG.height;
 
 function create() {
+    if (FlxG.onMobile && SONG.meta.name == "genocides")
+    {
+        screenWidth = 640;
+        screenHeight = 480;
+    }
+    
     for (i in 0...2) {
         var cinematicBar:FunkinSprite = new FunkinSprite(-150).makeSolid(1, 1, 0xFF000000);
         cinematicBar.scrollFactor.set(0, 0);
@@ -15,7 +23,7 @@ function create() {
         cinematicBar.cameras = [camHUD];
         insert(0, cinematicBar);
 
-        cinematicBar.scale.set(FlxG.width+300, 0);
+        cinematicBar.scale.set(screenWidth+300, 0);
         cinematicBar.updateHitbox();
 
         if (i == 1) cinematicBar2 = cinematicBar;
@@ -27,7 +35,7 @@ function create() {
 function update(elapsed:Float) {
     if (cinematicBarTween2 != null && cinematicBarTween2.active && cinematicBarTween1 != null && cinematicBarTween1.active)
         for (bar in [cinematicBar1, cinematicBar2]) bar.updateHitbox();
-    cinematicBar2.y = FlxG.height - cinematicBar2.height + 10;
+    cinematicBar2.y = screenHeight - cinematicBar2.height + 10;
 }
 
 function onEvent(eventEvent) {
@@ -46,7 +54,7 @@ function onEvent(eventEvent) {
 
         if (params[0] == false || (PlayState.chartingMode && Charter.startHere && eventEvent.event.time < Charter.startTime))
             for (bar in [cinematicBar1, cinematicBar2]) {
-                bar.scale.y = ((FlxG.height/2) * params[1] + 0.1);
+                bar.scale.y = ((screenHeight/2) * params[1] + 0.1);
                 bar.updateHitbox();
             }
         else {
@@ -55,7 +63,7 @@ function onEvent(eventEvent) {
 
             var flxease:String = params[3] + (params[3] == "linear" ? "" : params[4]);
             for (bar in [cinematicBar1, cinematicBar2]) {
-                var tween:FlxTween = FlxTween.tween(bar.scale, {y: ((FlxG.height+20)/2) * params[1]}, ((Conductor.crochet / 4) / 1000) * params[2], {ease: Reflect.field(FlxEase, flxease)});
+                var tween:FlxTween = FlxTween.tween(bar.scale, {y: ((screenHeight+20)/2) * params[1]}, ((Conductor.crochet / 4) / 1000) * params[2], {ease: Reflect.field(FlxEase, flxease)});
                 if (bar == cinematicBar1) cinematicBarTween1 = tween;
                 else cinematicBarTween2 = tween;
             }

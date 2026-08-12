@@ -37,6 +37,7 @@ import funkin.backend.utils.BitmapUtil;
 import funkin.backend.utils.FlxInterpolateColor;
 import funkin.menus.StoryMenuState.StoryWeeklist;
 import funkin.savedata.FunkinSave;
+import funkin.backend.system.Controls;
 
 import openfl.Lib;
 
@@ -207,8 +208,15 @@ var colorLerp:FlxInterpolateColor = new FlxInterpolateColor(FlxColor.WHITE);
 var fadeMusic:Bool = false;
 var colorLOCKED:Int = 0xFFB1B1B1; 
 var camKey:FlxCamera;
+var selectedWeek:String = null;
+var exittext:FunkinText;
+var camOrange:FlxCamera;
 
 function create() {
+    camOrange = new FlxCamera();
+    camOrange.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(camOrange, false);
+    
     var delay:Float = 0.28;
 
     if(Options.gameplayShaders) {
@@ -288,6 +296,14 @@ function create() {
     });
 
     FlxTween.tween(camera.scroll, {y: 0}, 1.25, {ease: FlxEase.quartOut, startDelay: delay});
+    
+    exittext = new FunkinText(0, 660, FlxG.width, "< EXIT", 46);
+    exittext.alignment = "left";
+    exittext.fieldWidth = 110;
+    exittext.fieldHeight = 50;
+    exittext.font = Paths.font("8bit-jve.ttf");
+    exittext.camera = camOrange;
+    add(exittext);
 }
 
 var blackBG:FunkinSprite;
@@ -432,7 +448,7 @@ function loadLocks() {
                         date: ""
                     });
                 }
-            }, (num) -> {if((Options.gameplayShaders && FlxG.save.data.bloom)) bloom.size = 20 * num; bloom.brightness = 1 + (20 * num);});
+            }, (num) -> {if((Options.gameplayShaders && FlxG.save.data.bloom)) { bloom.size = 20 * num; bloom.brightness = 1 + (20 * num); }});
             if (Options.gameplayShaders) {
                 var intensity:Float = (quedLocks.length == 0) ? 0 : 0.15;
                 if (FlxG.save.data.water) {
@@ -505,6 +521,9 @@ function update(elapsed:Float) {
                 exit();
             }
         }
+        
+        if (FlxG.mouse.justReleased && FlxG.mouse.overlaps(exittext)) exit();
+        
         for(spr in weekSprites) {
             var scale:Float = (curWeek.sprite == spr) ? 1.05 : 1;
             if(weekList["dusttale"].spr != spr)
@@ -520,9 +539,35 @@ function update(elapsed:Float) {
             }
         }
 
-        if(curWeek.sprite != null && (FlxG.mouse.justPressed || controls.ACCEPT))
-            select();
-        else if(controls.ACCEPT && curWeek.sprite == null) {
+        if (FlxG.mouse.justPressed) 
+        {
+            var hovered:Bool = false;
+            for (key in weekList.keys()) {
+                var spr = weekList[key].spr;
+                if(spr.ID == 1 && FlxG.mouse.overlaps(spr)) 
+                {
+                    hovered = true;
+                    if (selectedWeek == key) 
+                    {
+                        select();
+                    } 
+                    else 
+                    {
+                        setCurWeek(key);
+                        selectedWeek = key;
+                        FlxG.sound.play(Paths.sound("menu/scroll"), 0.5);
+                    }
+                }
+            }
+            if (!hovered) {
+                selectedWeek = null;
+                if (curWeek.sprite != null) {
+                    curWeek.sprite?.playAnim("idle");
+                    curWeek.sprite = null;
+                }
+            }
+        }
+        else if (controls.ACCEPT && curWeek.sprite == null) {
             setCurWeek("dusttale");
             zoomLevel = 1.02;
         }
@@ -563,14 +608,14 @@ function onMouseMoved(?x:Float = 0, ?y:Float = 0) {
     for(key in weekList.keys()) {
         var spr = weekList[key].spr;
         if(spr.ID == 1 && FlxG.mouse.overlaps(spr)) {
-            if(curWeek.sprite != spr) setCurWeek(key);
+            //if(curWeek.sprite != spr) setCurWeek(key);
             return;
         }
     }
-    if(curWeek.sprite != null) {
+    /* if(curWeek.sprite != null) {
         curWeek.sprite?.playAnim("idle");
         curWeek.sprite = null;
-    }
+    } */
 }
 
 function setCurWeek(key) {
@@ -583,6 +628,7 @@ function setCurWeek(key) {
 }
 
 function exit() {
+    exittext.visible = false;
     fadeMusic = false;
     weekSelected = true;
     canLerp = false;
@@ -625,7 +671,7 @@ function select() {
         PlayState.loadWeek(week, week.difficulties[0]);
     }
 
-    pillarFront.visible = pillarBack.visible = dustText.visible = false;
+    pillarFront.visible = pillarBack.visible = dustText.visible = exittext.visible = false;
     for(spr in weekSprites)
         spr.visible = false;
 

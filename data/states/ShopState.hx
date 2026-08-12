@@ -244,6 +244,9 @@ function create() {
     // Check the freshly loaded shop JSON instead of relying on the global value,
     // which may come from an older catalogue cached earlier in the session.
     refreshShopCompletion();
+    
+    addTouchPad('NONE', 'B');
+	addTouchPadCamera();
 
     if(FunkinSave.getSongHighscore("you-are", "hard").score > 1 && FunkinSave.getSongHighscore("the-uprising", "hard").score > 1)
         introDialogue = "bothEndings";
@@ -497,7 +500,7 @@ function update(elapsed:Float) {
             FlxG.sound.play(Paths.sound("wing_oggster/snd_wngdng" + FlxG.random.int(1, 7)), 0.025).pitch = 0.3;
         }
         autodia += elapsed;
-        bg.shader.time *= 0.2;
+        if (Options.gameplayShaders && FlxG.save.data.water) bg.shader.time *= 0.2;
         if(autodia > autodiaLimit) {
             autodiaLimit = FlxG.random.float(5, 15);
             autodia = 0;

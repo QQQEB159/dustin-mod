@@ -17,14 +17,30 @@ var currentFloatRadius:Float = 200;
 var fakeMaxHealthMode:Bool = false;
 var realMaxHealth:Int = 10;
 var originalTextBGWidth:Float;
-
+var screenWidth:Float = FlxG.width;
+var screenHeight:Float = FlxG.height;
 
 public var flames:CustomShader;
 importScript("data/scripts/DialogueBoxBG");
 
 function create() {
     ratingScale = 0.3;
-    __undertaleResize();
+    if (FlxG.onMobile) 
+    {
+        for (camera in [FlxG.camera, camHUD]) 
+        {
+            camera.width = 640;
+            camera.height = 480;
+            camera.flashSprite.scaleX = 1.5;
+            camera.flashSprite.scaleY = 1.5;
+            camera.x += 320;
+            camera.y += 120;
+        }
+        screenWidth = 640;
+        screenHeight = 480;
+        //camHUD.y -= 100;
+    } 
+    else _undertainableResize();
 
     for (thing in [timeBar, timeBarBG]) if(thing != null) {
         remove(thing); thing.destroy();
@@ -43,20 +59,24 @@ var textBG:FunkinSprite;
 var erText:FunkinText;
 
 function postCreate() {
+    for (strum in playerStrums.members) {
+        strum.y -= camHUD.downscroll ? -20 : 20;
+    }
+    
     FlxG.camera.followLerp = 0;
     camFollowChars = false;
 
     dustinHealthBG?.visible = false;
     lerpedHealth = health = maxHealth;
     dustinHealthBar.flipX = true;
-    dustinHealthBar.width = FlxG.width / 8;
-    dustinHealthBar.x -= camHUD.downscroll ? FlxG.width / 1.47 : 130;
-    dustinHealthBar.y += camHUD.downscroll ? -FlxG.height / 1.35 : 30;
+    dustinHealthBar.width = screenWidth / 8;
+    dustinHealthBar.x -= camHUD.downscroll ? 755 : 452;
+    dustinHealthBar.y += camHUD.downscroll ? -550 : -150;
     dustinHealthBar.offset.y += camHUD.downscroll ? -5 : 9;
     dustinHealthBar.antialiasing = false;
     noMissIconAnim = true;
 
-    for (text in [hpTxt = textCrispy(new FunkinText(FlxG.width - (FlxG.width / 2.67) - 10, dustinHealthBar.y - 9, 0, "hp")), lifeTxt = textCrispy(new FunkinText(FlxG.width - (FlxG.width / 5) - 9, dustinHealthBar.y - 9, 0, health * 10 + "/" + maxHealth * 10))]) {
+    for (text in [hpTxt = textCrispy(new FunkinText(screenWidth - (screenWidth / 2.67) - 10, dustinHealthBar.y - 9, 0, "hp")), lifeTxt = textCrispy(new FunkinText(screenWidth - (screenWidth / 5) - 9, dustinHealthBar.y - 9, 0, health * 10 + "/" + maxHealth * 10))]) {
         insert(members.indexOf(dustinHealthBar), text); hudElements.insert(hudElements.indexOf(dustinHealthBar), text);
         text.cameras = [camHUD]; text.scrollFactor.set();
         text.setFormat(Paths.font("DTM-Mono.ttf"), 20, 0xFFFFFFFF);
@@ -66,7 +86,7 @@ function postCreate() {
 
         if (camHUD.downscroll) {
             text.y -= 2;
-            text.x -= FlxG.width / 2.1;
+            text.x -= screenWidth / 2.1;
         }
     }
     for(text in [scoreTxt, missesTxt, accuracyTxt]) text?.visible = false;
@@ -76,9 +96,9 @@ function postCreate() {
     genocides.cameras = [camHUD];
     iconText.animation.play(_lastAnim = dad.getAnimName());
 
-    insert(members.indexOf(iconText), textBG = newDialogueBoxBG(20, 20, null, (iconText.width + FlxG.width * 2) * iconText.scale.x, (iconText.height + FlxG.height / 1.6) * iconText.scale.y, 5));
+    insert(members.indexOf(iconText), textBG = newDialogueBoxBG(20, 20, null, (iconText.width + screenWidth * 2) * iconText.scale.x, (iconText.height + screenHeight / 1.6) * iconText.scale.y, 5));
     textBG.cameras = [camHUD];
-    if(camHUD.downscroll) textBG.y = FlxG.height - textBG.height - 15;
+    if(camHUD.downscroll) textBG.y = screenHeight - textBG.height - 15;
     if(camHUD.downscroll) genocides.y += 320;
     hudElements.push(textBG);
 
@@ -159,9 +179,9 @@ function update(elapsed) {
 
     tottalTimer += elapsed;
     flames.time = tottalTimer;
-    flames.zoom = 1 / (Lib.application.window.width/FlxG.width);
+    flames.zoom = 1 / (Lib.application.window.width/screenWidth);
     dustiniconP2.x = 10;
-    dustiniconP1.x = camHUD.downscroll ? lifeTxt.x + lifeTxt.width + 10 : FlxG.width - dustiniconP1.width - 10;
+    dustiniconP1.x = camHUD.downscroll ? lifeTxt.x + lifeTxt.width + 10 : screenWidth - dustiniconP1.width - 10;
     if (dad.curCharacter == "papyrus_genocides") {
         dustiniconP2.flipX = dustiniconP1.flipX = true;
         dustiniconP2.x = dustiniconP1.x;
@@ -214,15 +234,15 @@ var _oldBf:Character = null;
 function onEvent(_) if (_.event.name == "Change Character" && _.event.params[1] == "papyrus_genocides" && iconText != null) {
     _oldBf = boyfriend;
 
-    textBG.x = FlxG.width - (iconText.width + FlxG.width * 2) * iconText.scale.x - 20;
+    textBG.x = screenWidth - (iconText.width + screenWidth * 2) * iconText.scale.x - 20;
     erText.x = textBG.x + 20;
-    for (strum in strumLines.members[1].members) strum.x -= (FlxG.width / 1.9) - 10;
+    for (strum in strumLines.members[1].members) strum.x -= (screenWidth / 1.9) - 10;
 
-    if (camHUD.downscroll) for (thing in [dustinHealthBar, hpTxt, lifeTxt]) thing.x += (FlxG.width / 2.1);
+    if (camHUD.downscroll) for (thing in [dustinHealthBar, hpTxt, lifeTxt]) thing.x += (screenWidth / 2.1);
     else {
         dustinHealthBar.x = -440;
-        hpTxt.x = (FlxG.width / 7.80) - 10;
-        lifeTxt.x = (FlxG.width / 3.3) - 9;
+        hpTxt.x = (screenWidth / 7.80) - 10;
+        lifeTxt.x = (screenWidth / 3.3) - 9;
     }
 
     shake(0.7, 0.85);
@@ -333,4 +353,4 @@ function clearTrails() {
     papsTrails = [];
 }
 
-function destroy() __fnfResize();
+//function destroy() __fnfResize();

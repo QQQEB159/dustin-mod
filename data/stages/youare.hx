@@ -117,7 +117,7 @@ function postCreate() {
     theEndText.visible = false;
     //door.camera = bgCam;
 
-
+    setMobileControlsColor(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF);
 }
 
 function stepHit(step:Int) {
@@ -245,6 +245,7 @@ function stepHit(step:Int) {
         // SANS PART
 
         case 2764:
+            setMobileControlsColor(0xFFC15700, 0xFFC15700, 0xFFC15700, 0xFFC15700);
             heart.alpha = 1;
             spawnPapsTrail(heart);
             heartBaseY = heart.y;

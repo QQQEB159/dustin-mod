@@ -28,6 +28,9 @@ var scrollCam:FlxCamera;
 var aus:Array<Category>;
 var leftArrow:FlxSprite;
 var rightArrow:FlxSprite;
+var upArrow:FlxText;
+var downArrow:FlxText;
+var exitText:FunkinText;
 
 var changeCooldown:Float = 0;
 var changeCooldownTime:Float = 0.3;
@@ -88,6 +91,23 @@ function create() {
     rightArrow = new FlxText(1180, 70, 50, ">", 50, true);
     rightArrow.setFormat(Paths.font("8bit-jve.ttf"), 50, FlxColor.WHITE, FlxTextAlign.CENTER);
     add(rightArrow);
+    
+    upArrow = new FlxText(1180, 160, 50, "^", 70, true);
+    upArrow.setFormat(Paths.font("8bit-jve.ttf"), 70, FlxColor.WHITE, FlxTextAlign.CENTER);
+    add(upArrow);
+
+    downArrow = new FlxText(1180, 260, 50, "^", 70, true);
+    downArrow.setFormat(Paths.font("8bit-jve.ttf"), 70, FlxColor.WHITE, FlxTextAlign.CENTER);
+    downArrow.angle = 180;
+    add(downArrow);
+
+    exitText = new FunkinText(0, 660, FlxG.width, "< EXIT", 46);
+    exitText.alignment = FlxTextAlign.RIGHT;
+    exitText.x = 1100;
+    exitText.fieldWidth = 150;
+    exitText.fieldHeight = 50;
+    exitText.setFormat(Paths.font("8bit-jve.ttf"), 46, FlxColor.WHITE, FlxTextAlign.RIGHT);
+    add(exitText);
 
     charImage = null;
 
@@ -203,6 +223,40 @@ function update(elapsed:Float):Void {
         animateArrow(rightArrow);
     }
 
+    if (FlxG.mouse.justPressed) {
+        var mouseX = FlxG.mouse.screenX;
+        var mouseY = FlxG.mouse.screenY;
+
+        if (leftArrow != null && mouseX >= leftArrow.x && mouseX <= leftArrow.x + leftArrow.width &&
+            mouseY >= leftArrow.y && mouseY <= leftArrow.y + leftArrow.height) {
+            changeCharacter(-1);
+            animateArrow(leftArrow);
+        }
+
+        if (rightArrow != null && mouseX >= rightArrow.x && mouseX <= rightArrow.x + rightArrow.width &&
+            mouseY >= rightArrow.y && mouseY <= rightArrow.y + rightArrow.height) {
+            changeCharacter(1);
+            animateArrow(rightArrow);
+        }
+
+        if (upArrow != null && mouseX >= upArrow.x && mouseX <= upArrow.x + upArrow.width &&
+            mouseY >= upArrow.y && mouseY <= upArrow.y + upArrow.height) {
+            changeSelection(-1);
+            animateArrow(upArrow);
+        }
+
+        if (downArrow != null && mouseX >= downArrow.x && mouseX <= downArrow.x + downArrow.width &&
+            mouseY >= downArrow.y && mouseY <= downArrow.y + downArrow.height) {
+            changeSelection(1);
+            animateArrow(downArrow);
+        }
+
+        if (exitText != null && mouseX >= exitText.x && mouseX <= exitText.x + exitText.width &&
+            mouseY >= exitText.y && mouseY <= exitText.y + exitText.height) {
+            FlxG.switchState(new ModState("gallery/GalleryState"));
+        }
+    }
+    
     if (controls.BACK)
         FlxG.switchState(new ModState("gallery/GalleryState"));
 }

@@ -21,6 +21,8 @@ function postCreate() {
     iconGroup.icons[1].scale.set(0.75,0.75);
     iconGroup.icons[1].offset.set(0,-5);
     iconGroup.icons[1].color = iconGroup.shadeColor;
+    
+    setMobileControlsColor(0xFFC15700, 0xFFC15700, 0xFFC15700, 0xFFC15700);
 }
 
 function fakeIconP2() {

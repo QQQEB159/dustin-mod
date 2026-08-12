@@ -150,7 +150,7 @@ function stepHit(step:Int) {
             for (element in hudElements)
                 FlxTween.tween(element, {alpha: 1}, (Conductor.stepCrochet / 1000) * 4, {ease: FlxEase.quadIn});
 
-            screenVignette.transperency = true;
+            if (Options.gameplayShaders) screenVignette.transperency = true;
 
             camGame.removeShader(screenVignette);
             camCharacters.removeShader(screenVignette2);
@@ -184,11 +184,14 @@ function stepHit(step:Int) {
 
             camHUD.removeShader(water);
 
-            for (strum in strumLines) {
-                for (char in strum.characters) {
-                    char.shader.color = [.2, .2, .2];
-                    char.shader.minBrightness = .01;
-                    FlxTween.num(0, .1, (Conductor.stepCrochet / 1000) * 20, {ease: FlxEase.quintIn}, (val:Float) -> {char.shader.ratio = val;});
+            if (Options.gameplayShaders)
+            {
+                for (strum in strumLines) {
+                    for (char in strum.characters) {
+                        char.shader.color = [.2, .2, .2];
+                        char.shader.minBrightness = .01;
+                        FlxTween.num(0, .1, (Conductor.stepCrochet / 1000) * 20, {ease: FlxEase.quintIn}, (val:Float) -> {char.shader.ratio = val;});
+                    }
                 }
             }
         
@@ -218,7 +221,7 @@ function stepHit(step:Int) {
             FlxTween.num(32, 1, (Conductor.stepCrochet / 1000) * 24, {ease: FlxEase.circOut, onComplete: (_) -> {
                 if (Options.gameplayShaders && FlxG.save.data.pixel) camHUD.addShader(pixel);
                 for (cam in [camCharacters, camForeground]) cam.removeShader(pixel);
-            }}, (val:Float) -> {pixel.blockSize = val;});
+            }}, (val:Float) -> {if (Options.gameplayShaders) pixel.blockSize = val;});
 
             camGame.angle = 0; 
 
@@ -338,6 +341,7 @@ function stepHit(step:Int) {
             FlxTween.num(1.3, .4, (Conductor.stepCrochet / 1000) * 8, {ease: FlxEase.quadOut}, (val:Float) -> {bloom_new.brightness = val;});
             FlxTween.num(32, 15, (Conductor.stepCrochet / 1000) * 8, {ease: FlxEase.quadOut}, (val:Float) -> {bloom_new.size = val;});
         case 2128:
+            if (FlxG.save.data.mechanics) enableSpaceBar(true);
             camHUD2.removeShader(screenVignette);
             camHUD.removeShader(snowShader2);
 
@@ -362,6 +366,9 @@ function stepHit(step:Int) {
             flickerSprite.alpha = 0;
         case 2280:
             FlxTween.num(0, .7, (Conductor.stepCrochet / 1000) * 8, {ease: FlxEase.quadOut}, (val:Float) -> {gfAlpha = val;});
+            
+        case 2282:
+            if (FlxG.save.data.mechanics) enableSpaceBar(false);
 
         case 2288: 
             snowShader2.BRIGHT = 3.5; snowShader.BRIGHT = 2.8; snowSpeed = 4;

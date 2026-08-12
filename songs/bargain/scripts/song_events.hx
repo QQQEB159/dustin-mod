@@ -10,5 +10,5 @@ function postCreate() {
     FlxG.cameras.remove(videoCam, false);
     FlxG.cameras.add(videoCam, false);
 
-    preloadedVideos["bargain"].antialiasing = false; // as brainrot as possible - lunar
+    //preloadedVideos["bargain"].antialiasing = false; // as brainrot as possible - lunar
 }

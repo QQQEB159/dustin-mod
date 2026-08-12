@@ -8,6 +8,7 @@ import flixel.text.FlxText.FlxTextBorderStyle;
 import flixel.addons.effects.FlxTrail;
 import funkin.savedata.FunkinSave;
 import funkin.backend.MusicBeatState;
+import mobile.funkin.backend.utils.TouchUtil;
 
 using StringTools;
 
@@ -535,6 +536,9 @@ function create() {
     }
 
     frontPortrait.camera = frontCam;
+    
+    addTouchPad('LEFT_FULL', 'A_B');
+	addTouchPadCamera();
 }
 
 
@@ -545,7 +549,7 @@ function update(elapsed:Float) {
     iTime += elapsed;
     glitch.iTime = iTime;
 
-    if (waitingVariantResponse && FlxG.keys.justPressed.ANY) {
+    if (waitingVariantResponse && (FlxG.keys.justPressed.ANY || TouchUtil.justPressed)) {
         waitingVariantResponse = false;
         FlxG.sound.play(Paths.sound("menu/confirm"));
         FlxTween.cancelTweensOf(varientQNA);
@@ -664,7 +668,7 @@ function update(elapsed:Float) {
         }, true);
     }
 
-    if (!waitingVariantResponse && allowInput && (controls.ACCEPT || FlxG.mouse.justPressed)) {
+    if (!waitingVariantResponse && allowInput && (controls.ACCEPT)) {
         allowInput = false;
         selectSong();
     }

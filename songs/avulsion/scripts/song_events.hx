@@ -3,6 +3,7 @@ import flixel.effects.FlxFlicker;
 import flixel.addons.effects.FlxTrail;
 import flixel.math.FlxMatrix;
 import funkin.backend.FlxAnimate;
+import funkin.backend.MusicBeatState;
 
 public var static2:CustomShader;
 public var chromWarp:CustomShader;
@@ -90,6 +91,8 @@ function postCreate() {
         camPaps.addShader(screenVignette2);
     }
     spawnPapsTrail(gf);
+    
+    enableSpaceBar(false);
 }
 
 var drainAmount:Float = .3;
@@ -156,10 +159,18 @@ function stepHit(step:Int) {
 
             dust.BRIGHT = 0;
             //papsTrails[0].visible = false;
-            gf.script.set("enabledTrails", false);
-            for (trail in gf.script.get("papsTrails")) {
-                gf.script.get("papsTrails").remove(trail);
-                trail = null;
+            if (gf != null && gf.script != null) 
+            {
+                gf.script.set("enabledTrails", false);
+                var trails = gf.script.get("papsTrails");
+                if (trails != null) 
+                {
+                    for (trail in trails) 
+                    {
+                        trails.remove(trail);
+                        trail = null;
+                    }
+                }
             }
 
         case 1812:
@@ -202,6 +213,7 @@ function stepHit(step:Int) {
 
             health = 2; // DISABLE ON HELL IF IT EVER COMES OUT -lunar
             drainHealth = true;
+            if (FlxG.save.data.mechanics) enableSpaceBar(true);
             FlxG.camera.shake(0.01, 0.4);
             dustinHealthBG.y -= 32;
             dustinHealthBar.y -= 32;
@@ -234,11 +246,15 @@ function stepHit(step:Int) {
         case 2238:
             dad.alpha = 1;
             drainHealth = false;
+            if (FlxG.save.data.mechanics) enableSpaceBar(false);
             redOverlayHUD.alpha = 0;
             chromWarp.distortion = 0;
             warp.distortion = 0;
-            shadows.boyfriend.distance = 0;
-            shadows.dad.distance = 0;
+            if (Options.gameplayShaders)
+            {
+                shadows.boyfriend.distance = 0;
+                shadows.dad.distance = 0;
+            }
             FlxG.camera.shake(0.02, 0.5);
             stage.getSprite("dtLights").alpha = 0;
             stage.getSprite("dtEyes").alpha = 0;
@@ -306,7 +322,7 @@ function update(elapsed:Float) {
 
     if (drainHealth && FlxG.save.data.mechanics) {
         health -= (drainAmount*.96) * elapsed;
-        if (FlxG.keys.justPressed.SPACE) health += gainAmount;
+        if (FlxG.keys.justPressed.SPACE || MusicBeatState.getState().mobileControls.instance.buttonExtra.justPressed) health += gainAmount;
     }
 }
 
@@ -420,6 +436,7 @@ class AtlasTrail extends FlxTrail {
         super.update(elapsed);
         if (_l != (_l = members.length)) {
             for(i in members) {
+                if (i == null) continue;
                 trace('oh');
                 if (i.animateAtlas == null && target.animateAtlas != null) {
                     limb_instance.push(target.animateAtlas.anim.cutInstance);

@@ -79,6 +79,8 @@ function postCreate() {
     road_3.visible = false;
     road_2.visible = false;
     road_1.visible = false;
+    
+    setMobileControlsColor(0xFFF9393F, 0xFFF9393F, 0xFFF9393F, 0xFFF9393F);
 }
 
 function stepHit(step:Int) {
@@ -90,7 +92,7 @@ function stepHit(step:Int) {
             backCam.bgColor = 0xFFFF0000;
 
         case 392:
-            if (Options.gameplayShaders) boyfriend.color = 0xFFFFFFFF;
+            boyfriend.color = 0xFFFFFFFF;
             BG.visible = true;
             FG.visible = true;
             dad.visible = true;

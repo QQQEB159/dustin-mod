@@ -22,6 +22,7 @@ function stepHit(step:Int) {
         stage.stageSprites["il_legacy"].visible = true;
         stage.stageSprites["cinematic_bars_vin"].visible = true;
 
+        setMobileControlsColor(0xFFC24B99, 0xFF00FFFF, 0xFF12FA05, 0xFFF9393F);
     }
 
     if (step == 1040) {
@@ -35,6 +36,8 @@ function stepHit(step:Int) {
         stage.stageSprites["bg_legacy"].visible = false;
         stage.stageSprites["il_legacy"].visible = false;
         stage.stageSprites["cinematic_bars_vin"].visible = false;
+        
+        setMobileControlsColor(0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF);
     }
 
     if (step == 1680) {

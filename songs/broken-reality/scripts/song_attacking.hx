@@ -5,6 +5,8 @@ import funkin.editors.charter.Charter;
 import flixel.text.FlxTextBorderStyle;
 import flixel.effects.FlxFlicker;
 
+import funkin.backend.MusicBeatState;
+
 var target_flip:Int = -1;
 var target:FlxSprite;
 var target_choice:FlxSprite;
@@ -82,6 +84,9 @@ function postCreate() {
     if (FlxG.save.data.scrollSpeedChange) {
         PlayState.instance.scrollSpeed = 2.4;
     }
+    
+    enableSpaceBar(true);
+    setMobileControlsColor(0xFFBB90F4, 0xFFBB90F4, 0xFFBB90F4, 0xFFBB90F4);
 }
 
 public var didDamage:Bool = false;
@@ -271,7 +276,7 @@ var justPressedZ:Bool = false; // store outside of 30 fps update for obv reasons
 
 var frameNum:Int = 0;
 function update(elapsed:Float) {
-    if (!justPressedZ && FlxG.keys.justPressed.SPACE) justPressedZ = true;
+    if (!justPressedZ && (FlxG.keys.justPressed.SPACE || MusicBeatState.getState().mobileControls.instance.buttonExtra.justPressed)) justPressedZ = true;
 
     undertaleFrameCounter += elapsed;
     if (undertaleFrameCounter > undertaleFrameTime) {

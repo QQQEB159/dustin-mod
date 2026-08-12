@@ -68,11 +68,11 @@ function create(e) {
     game_over.cameras = [gameOverCam];
     add(game_over);
     game_over.screenCenter();
-    if (songName == "genocides")
-        game_over.y += 30;
+    //if (songName == "genocides")
+        //game_over.y += 30;
 
     {
-        var path =  Paths.getAssetsRoot().replace("./mods/dustin", "assets/") + "songs/" + PlayState.SONG.meta.name + "/quotes.txt";
+        var path =  Paths.getAssetsRoot().replace("mods/dustin", "assets/") + "songs/" + PlayState.SONG.meta.name + "/quotes.txt";
         trace(Assets.exists(path));
         if(Assets.exists(path)) {
             var quoteType:String = "LOOP";
@@ -97,7 +97,7 @@ function create(e) {
     quoteText.alignment = "center";
     quoteText.letterSpacing = 8;
     add(quoteText);
-    quoteText.y = songName == "genocides" ? 370 : 530;
+    quoteText.y = songName == "genocides" ? 530 : 530;
     quoteTextObj.defaultSound = FlxG.sound.load(Paths.sound('talk/' + textSound));
 
     if (soundName == "fellsans") {
@@ -132,7 +132,7 @@ function create(e) {
     heart.screenCenter();
 
     var positionToTween = heart.y + 80;
-    heart.y = heart.y + (songName == "genocides" ? 500 : 400);
+    heart.y = heart.y + (songName == "genocides" ? 400 : 400);
 
     var heartPath2:String = useBraveHeart
         ? "game/gameover/brave_heart_broken"
@@ -211,6 +211,9 @@ function create(e) {
             }
         });
     });
+    
+    addTouchPad('NONE', 'A_B');
+	addTouchPadCamera();
 }
 
 var iTime:Float = 0;
@@ -220,7 +223,7 @@ function update(elapsed:Float){
 
     updateFunkinTypeText(elapsed*1.2, quoteTextObj);
 
-    if (controls.ACCEPT || FlxG.mouse.justPressed && gameOverEnd){
+    if (controls.ACCEPT && gameOverEnd){
         endGameOver();
     }
     if (controls.BACK && gameOverEnd){

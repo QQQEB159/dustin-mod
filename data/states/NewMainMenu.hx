@@ -12,6 +12,7 @@ import funkin.savedata.FunkinSave;
 import flixel.text.FlxText.FlxTextBorderStyle;
 
 import funkin.backend.utils.HttpUtil;
+import funkin.backend.system.Controls;
 import openfl.Lib;
 
 var background:FunkinSprite;
@@ -42,7 +43,7 @@ var prevSelected = FlxPoint.get();
 
 var focused:String = "y";
 
-var hasInternet:Bool = HttpUtil.hasInternet();
+var hasInternet:Bool = true;
 
 var canSelect:Bool = true;
 
@@ -89,7 +90,7 @@ function create() {
     snow.set("initIndex", members.length);
 
     FlxG.camera.bgColor = 0xFF000000;
-    FlxG.mouse.visible = true;
+    FlxG.mouse.visible = !Controls.instance.touchC;
     playMusic("mainMenu", 1);
 
 
@@ -269,9 +270,25 @@ function update(elapsed:Float):Void {
         }
     }
 
-    if (!clickedEgg && (firstIntro ? !intro : true) && canSelect) {
-    if (controls.ACCEPT) select();
-    if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(options[curSelected.y])) select();}
+    if (!clickedEgg && (firstIntro ? !intro : true) && controls.ACCEPT && canSelect) select();
+    
+    for (a in options)
+    {
+        if (!clickedEgg && (firstIntro ? !intro : true) && (FlxG.mouse.justPressed && FlxG.mouse.overlaps(a)) && canSelect) 
+        {
+            changeSelection(null, a.ID, true);
+            select();
+        }
+    }
+    
+    for (b in socialOptions)
+    {
+        if (!clickedEgg && (firstIntro ? !intro : true) && (FlxG.mouse.justPressed && FlxG.mouse.overlaps(b)) && canSelect) 
+        {
+            changeSelection(b.ID, null, true);
+            select();
+        }
+    }
 
     if (Options.devMode && FlxG.keys.justPressed.SEVEN) {
         persistentUpdate = false;
