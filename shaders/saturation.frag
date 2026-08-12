@@ -22,13 +22,13 @@ mat4 saturationMatrix( float saturation )
     float oneMinusSat = 1.0 - saturation;
     
     vec3 red = vec3( luminance.x * oneMinusSat );
-    red+= vec3( saturation, 0, 0 );
+    red+= vec3( saturation, 0.0, 0.0 );
     
     vec3 green = vec3( luminance.y * oneMinusSat );
-    green += vec3( 0, saturation, 0 );
+    green += vec3( 0.0, saturation, 0.0 );
     
     vec3 blue = vec3( luminance.z * oneMinusSat );
-    blue += vec3( 0, 0, saturation );
+    blue += vec3( 0.0, 0.0, saturation );
     
     return mat4( red,     0,
                  green,   0,

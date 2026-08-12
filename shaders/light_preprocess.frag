@@ -29,7 +29,7 @@ vec4 crepuscular_rays(vec2 texCoords, vec2 pos) {
     float decay = 0.905*(1.0 + ((1.0-bright)/20.0));
     float density = 0.15;
 
-    float weight = (0.14 * bright) + sin(time)*0.02; 
+    float weight = (0.17 * bright) + sin(time)*0.02; 
 
     vec2 tc = texCoords.xy;
     vec2 deltaTexCoord = tc - pos.xy;
