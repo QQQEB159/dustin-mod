@@ -111,6 +111,8 @@ function handleCode(str:String)
         
         update_dustin_scores();
         FlxG.save.data.dustinBeatEverything = true;
+        FlxG.save.data.dustinCash = 99999;
+        //FlxG.save.data.antiFlash = true;
         FlxG.save.flush();
         FunkinSave.flush();
         FlxG.resetState();

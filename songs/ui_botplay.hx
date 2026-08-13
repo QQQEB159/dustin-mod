@@ -11,6 +11,8 @@ function postCreate() {
 		botplayTxt.cameras = [camHUD];
 		botplayTxt.borderSize = 1.25;
 		add(botplayTxt);
+		
+		if (Options.middleScroll) botplayTxt.x += 400;
 
 		FlxTween.tween(botplayTxt, {alpha: 0}, 1, {type: FlxTweenType.PINGPONG, ease: FlxEase.sineInOut});
 

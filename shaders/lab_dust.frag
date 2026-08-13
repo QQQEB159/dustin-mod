@@ -56,19 +56,29 @@ uniform float dustRange;
 
 */
 float ns;
-float sFract(float x, float sm){
+
+float my_fwidth(vec2 res) {
+    return 1.0 / res.y;
+}
+
+float sFract(float x, float sm, vec2 res){
     const float sf = 1.; 
     
-    vec2 u = vec2(x, fwidth(x)*sf*sm);
+    float approx_fwidth = my_fwidth(res);
+    vec2 u = vec2(x, approx_fwidth * sf * sm);
     
     u.x = fract(u.x);
     u += (1. - 2.*u)*step(u.y, u.x);
-    return clamp(1. - u.x/u.y, 0., 1.); // Cos term ommitted.
+    return clamp(1. - u.x/u.y, 0., 1.); 
 }
-float sFloor(float x){ return x - sFract(x, 1.); } 
+
+float sFloor(float x, vec2 res){ 
+    return x - sFract(x, 1., res); 
+}
+
 vec3 hash33(vec3 p){ 
     float n = sin(dot(p, vec3(7, 157, 113)));    
-    return fract(vec3(2097152, 262144, 32768)*n)*2. - 1.; // return fract(vec3(64, 8, 1)*32768.0*n)*2.-1.; 
+    return fract(vec3(2097152, 262144, 32768)*n)*2. - 1.; 
 }
 float tetraNoise(in vec3 p){
     vec3 i = floor(p + dot(p, vec3(1./3.)) );  p -= i - dot(i, vec3(1./6.));
@@ -76,22 +86,23 @@ float tetraNoise(in vec3 p){
     vec3 p1 = p - i1 + 1./6., p2 = p - i2 + 1./3., p3 = p - .5;
     vec4 v = max(.5 - vec4(dot(p, p), dot(p1, p1), dot(p2, p2), dot(p3, p3)), 0.);
     vec4 d = vec4(dot(p, hash33(i)), dot(p1, hash33(i + i1)), dot(p2, hash33(i + i2)), dot(p3, hash33(i + 1.)));
-    return clamp(dot(d, v*v*v*8.)*1.732 + .5, 0., 2.); // Not sure if clamping is necessary. Might be overkill.
+    return clamp(dot(d, v*v*v*8.)*1.732 + .5, 0., 2.); 
 }
-float func(vec2 p){
-    float n = tetraNoise(vec3(p.x*4., p.y*4., 0) - vec3(0, .25, .5)*time);
-    float taper = .0 + dot(p, p*vec2(.35, 1));
+
+float func(vec2 p, vec2 res){
+    float n = tetraNoise(vec3(p.x*4., p.y*4., 0.) - vec3(0., .25, .5)*time);
+    float taper = .0 + dot(p, p*vec2(.35, .1));
 	n = max(n - taper, 0.)/max(1. - taper, .0000);
     ns = n; 
     const float palNum = 100.; 
-    return n*.25 + clamp(sFloor(n*(palNum - .001))/(palNum - 1.), 0., 1.)*.75;
+    return n*.25 + clamp(sFloor(n*(palNum - .001), res)/(palNum - 1.), 0., 1.)*.75;
 }
 
 float coolNoise() {
     vec2 u = (gl_FragCoord.xy - openfl_TextureSize.xy*.4)/openfl_TextureSize.y;
-    float f = func(u);
+    float f = func(u, res);
     float ssd = ns; 
-    return f*.4 + ssd*.6;;
+    return f*.4 + ssd*.6;
 }
 
 // (https://www.shadertoy.com/view/ldsGDn)
@@ -135,10 +146,10 @@ void main()
 	for (int i=STARTING_LAYERS;i<LAYERS;i++) {
 		float fi = float(i);
 		vec2 q = uvCentered*(1.+fi*DEPTH);
-		q += vec2(q.y*((WIDTH*(pixely?1.5:1.0))*mod(fi*7.238917,1.)-(WIDTH*(pixely?1.5:1.0))*.5) + ((((SPEED) * ((LAYERS-i)*.2))*(time*.4)))*0.1, -(SPEED*time/(1.+fi*DEPTH*.03)));
+		q += vec2(q.y*((WIDTH*(pixely?1.5:1.0))*mod(fi*7.238917,1.)-(WIDTH*(pixely?1.5:1.0))*.5) + ((((SPEED) * (float(LAYERS-i)*.2))*(time*.4)))*0.1, -(SPEED*time/(1.+fi*DEPTH*.03)));
 		vec3 n = vec3(floor(q),31.189+fi);
 		vec3 m = floor(n)*.00001 + fract(n);
-		vec3 mp = (31415.9+m)/fract(p*m);
+		vec3 mp = (vec3(31415.9)+m)/fract(p*m);
 		vec3 r = fract(mp);
 		vec2 s = abs(mod(q,1.)-.5+.9*r.xy-.45);
 		s += .01*abs(2.*fract(10.*q.yx)-1.); 
@@ -152,14 +163,14 @@ void main()
         float dist = dustFade - worldCoord.y;
         melt = (dist / dustRange);
     } else if (worldCoord.y > dustFade) {
-        melt = 0;
+        melt = 0.0;
     }
 
     vec4 flixelColor = flixel_texture2D(bitmap, openfl_TextureCoordv.xy);
 	vec3 effect = vec3(acc)*.8*((.6+(coolNoise()*3.)));
 	flixelColor.rgb += (effect*(pixely?1.6:1.0)*BRIGHT)*melt/**(pow(float(flixelColor.rgb), 1.7)*.9)*.3*/;
 
-	if (flixelColor.a == 0 && (effect.r > 0. || effect.g > 0. || effect.b > 0.))
+	if (flixelColor.a == 0. && (effect.r > 0. || effect.g > 0. || effect.b > 0.))
 		flixelColor.a = brightness(effect);
 
 	gl_FragColor = flixelColor;
