@@ -61,13 +61,17 @@ vec2 hash2_2(in vec2 p)
     p3 += dot(p3, p3.yzx+33.33);
     return fract((p3.xx+p3.yz)*p3.zy);
 }
+float noise1(in float p)
+{
+    return fract(sin(p) * 43758.5453);
+}
 
 vec2 noise2_2(in vec2 FUCK) {
     return vec2(noise1(FUCK.x), noise1(FUCK.y));
 }
 
 float noise1_2(in vec2 FUCK) {
-    return (noise1(FUCK.x) * noise1(FUCK.y)) / 2;
+    return (noise1(FUCK.x) * noise1(FUCK.y)) / 2.0;
 }
 
 float layeredNoise1_2(in vec2 uv, in float sizeMod, in float alphaMod, in int layers, in float animation)
@@ -95,7 +99,7 @@ vec2 rotate(in vec2 point, in float deg)
 {
  	float s = sin(deg);
     float c = cos(deg);
-    return mat2x2(s, c, -c, s) * point;
+    return mat2(s, c, -c, s) * point;
 }
 
 //Cell center from point on the grid
@@ -104,7 +108,7 @@ vec2 voronoiPointFromRoot(in vec2 root, in float deg)
   	vec2 point = hash2_2(root) - 0.5;
     float s = sin(deg);
     float c = cos(deg);
-    point = mat2x2(s, c, -c, s) * point * 0.66;
+    point = mat2(s, c, -c, s) * point * 0.66;
     point += root + 0.5;
     return point;
 }
