@@ -93,11 +93,11 @@ function update(elapsed:Float) {
                         var scrollSpeedChangeCheckbox:Checkbox = null;
                         var botplay:Checkbox = null;
 
-                        menu.insert(1, noHitCheckbox = new Checkbox("No Hit Mode", "Don't miss a note or you lose!!! Effects exp gained after songs (#1X Multipler# -> _2X Multipler_).", "nh", null, FlxG.save.data));
-                        menu.insert(1, scrollSpeedChangeCheckbox = new Checkbox("Scroll Speed Changes", "Enable/Disable any scroll speed changes midsong.", "scrollSpeedChange", null, FlxG.save.data));
-                        menu.insert(1, mechanicsHitCheckbox = new Checkbox("Mechanics", "Enable/Disable Gameplay Mechanics, effects exp gained after songs (#1X Multipler# -> *.5X Multipler*).", "mechanics", null, FlxG.save.data));
-                        menu.insert(1, botplay = new Checkbox("BotPlay", "If bad, just practice more.", "botplay", null, FlxG.save.data));
-                        menu.insert(1, new Checkbox("Window Shake", "Enable/Disable this if you want cool monitor movements while you're playing the game (not effective if you play on fullscreen!)", "mWindow", null, FlxG.save.data));
+                        menu.insert(2, noHitCheckbox = new Checkbox("No Hit Mode", "Don't miss a note or you lose!!! Effects exp gained after songs (#1X Multipler# -> _2X Multipler_).", "nh", null, FlxG.save.data));
+                        menu.insert(2, scrollSpeedChangeCheckbox = new Checkbox("Scroll Speed Changes", "Enable/Disable any scroll speed changes midsong.", "scrollSpeedChange", null, FlxG.save.data));
+                        menu.insert(2, mechanicsHitCheckbox = new Checkbox("Mechanics", "Enable/Disable Gameplay Mechanics, effects exp gained after songs (#1X Multipler# -> *.5X Multipler*).", "mechanics", null, FlxG.save.data));
+                        menu.insert(2, botplay = new Checkbox("BotPlay", "If bad, just practice more.", "botplay", null, FlxG.save.data));
+                        menu.insert(2, new Checkbox("Window Shake", "Enable/Disable this if you want cool monitor movements while you're playing the game (not effective if you play on fullscreen!)", "mWindow", null, FlxG.save.data));
 
                         botplay.members[0].color = 0xFFFFAA00;
                         for (i => checkBox in [mechanicsHitCheckbox, scrollSpeedChangeCheckbox, noHitCheckbox])
