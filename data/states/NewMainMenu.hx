@@ -264,7 +264,7 @@ function create() {
     //     });
     // }
     
-    keyboard = new FunkinSprite(1080, 20, Paths.image("keyboard"));
+    keyboard = new FunkinSprite(1080, 20, Paths.image("mobile/keyboard"));
 	keyboard.scale.set(0.4, 0.4);
 	keyboard.updateHitbox();
 	add(keyboard);

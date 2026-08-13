@@ -23,7 +23,7 @@ function handleCode(str:String)
 }
 
 function postCreate() {
-    keyboard = new FunkinSprite(-400, 1000, Paths.image("keyboard"));
+    keyboard = new FunkinSprite(-400, 1000, Paths.image("mobile/keyboard"));
 	keyboard.scale.set(0.5, 0.5);
 	keyboard.updateHitbox();
 	keyboard.scrollFactor.set(0, 0);
