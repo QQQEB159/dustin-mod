@@ -59,10 +59,6 @@ var textBG:FunkinSprite;
 var erText:FunkinText;
 
 function postCreate() {
-    for (strum in playerStrums.members) {
-        strum.y -= camHUD.downscroll ? -20 : 20;
-    }
-    
     FlxG.camera.followLerp = 0;
     camFollowChars = false;
 
@@ -284,6 +280,7 @@ function stepHit(step:Int){
             erText.text = "";
             for (strum in playerStrums.members) {
                 strum.visible = true;
+                strum.y -= camHUD.downscroll ? -20 : 20;
             }
 
             FlxTween.num(textBG.extra["bWidth"], originalTextBGWidth, 1.5, {ease: FlxEase.quartOut}, (val:Float) -> {
