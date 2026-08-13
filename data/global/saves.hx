@@ -30,6 +30,7 @@ static function load_save() {
     FlxG.save.data.mechanics ??= true;
     FlxG.save.data.scrollSpeedChange ??= true;
     FlxG.save.data.nh ??= false;
+	FlxG.save.data.botplay ??= false;
     FlxG.save.data.dustinSeenUnlockAnims ??= [];
     FlxG.save.data.dustinCash ??= 0;
     FlxG.save.data.dustinBeatEverything ??= false;
