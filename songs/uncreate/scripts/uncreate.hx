@@ -245,26 +245,28 @@ function shiftStrums():Void {
     var tweensLeft = 0;
 
 
-    for (strumLine in strumLines) {
-        for (sprite in strumLine.members) {
-            if (sprite != null) {
-                tweensLeft++;
-                FlxTween.tween(sprite, {x: sprite.x + shift}, tweenTime, {
-                    ease: FlxEase.quadOut,
-                });
+    if (!Options.middleScroll)
+    {
+        for (strumLine in strumLines) {
+            for (sprite in strumLine.members) {
+                if (sprite != null) {
+                    tweensLeft++;
+                    FlxTween.tween(sprite, {x: sprite.x + shift}, tweenTime, {
+                        ease: FlxEase.quadOut,
+                    });
+                }
             }
-        }
-
-        for (note in strumLine.notes) {
-            if (note != null) {
-                tweensLeft++;
-                FlxTween.tween(note, {x: note.x + shift}, tweenTime, {
-                    ease: FlxEase.quadOut,
-                });
+    
+            for (note in strumLine.notes) {
+                if (note != null) {
+                    tweensLeft++;
+                    FlxTween.tween(note, {x: note.x + shift}, tweenTime, {
+                        ease: FlxEase.quadOut,
+                    });
+                }
             }
         }
     }
-
 
     strumsShifted = !strumsShifted;
 }

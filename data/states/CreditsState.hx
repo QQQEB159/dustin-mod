@@ -86,7 +86,7 @@ function create() {
     background.screenCenter();
     add(background);
 
-    shText = textCrispy(new FlxText(0, 500, 500, "PRESS ENTER TO HEAR THE ECHOES", 40, true));
+    shText = textCrispy(new FlxText(0, 500, 500, "PRESS A TO HEAR THE ECHOES", 40, true));
     shText.setFormat(Paths.font("8bit-jve.ttf"), 40, 0x00F7FF, FlxTextAlign.CENTER);
     shText.x = FlxG.width / 2 - shText.width / 2;
     shText.y = FlxG.height - 30 - shText.height;
@@ -236,16 +236,19 @@ function create() {
         item.obj.y = offscreenStartY;
         item.obj.alpha = 0;
     }
+    
+    addTouchPad('LEFT_RIGHT', 'A_B_C');
+	addTouchPadCamera();
 }
 
 function update(elapsed:Float) {
     updateFunkinTypeText(elapsed, lineTextObj);
 
-    if (FlxG.keys.justPressed.SPACE && lineTextObj.isTyping) {
+    if ((FlxG.keys.justPressed.SPACE #if TOUCH_CONTROLS || touchPad != null && touchPad.buttonC.justPressed #end) && lineTextObj.isTyping) {
         lineTextObj.skip(lineTextObj);
     }
 
-    if (FlxG.keys.justPressed.ENTER && !isAnimating) {
+    if ((FlxG.keys.justPressed.ENTER #if TOUCH_CONTROLS || touchPad != null && touchPad.buttonA.justPressed #end) && !isAnimating) {
     if (!infoVisible && !spBox.visible) {
         showContent("credits");
         updateLine();
@@ -279,8 +282,8 @@ function update(elapsed:Float) {
             text.color = FlxColor.interpolate(text.color, finalColor, 0.3);
             finalScale = lerp(text.scale.x, finalScale, 0.3);
             text.scale.set(finalScale, finalScale);
-        } else if (imageDisplay.alpha > 0 && (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.RIGHT)) {
-            var dir = FlxG.keys.justPressed.LEFT ? -1 : 1;
+        } else if (imageDisplay.alpha > 0 && (controls.LEFT_P || controls.RIGHT_P)) {
+            var dir = controls.LEFT_P ? -1 : 1;
             if (!isTransitioning) {
                 devTransition(dir);
                 animateArrow(dir > 0 ? rightArrow : leftArrow);

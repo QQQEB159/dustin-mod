@@ -35,7 +35,7 @@ function create() {
         if (event.name == "Video Cutscene" && !preloadedVideos.exists(event.params[0])) {
             var vid:FlxVideoSprite = new FlxVideoSprite();
             vid.ID = event.time;
-            vid.autoVolumeHandle = false;
+            //vid.autoVolumeHandle = false;
             vid.bitmap.onFormatSetup.add(function() {
                     final width = vid.bitmap.bitmapData.width;
                     final height = vid.bitmap.bitmapData.height;
@@ -87,7 +87,7 @@ function getCalculatedVolume() {
 
 function update(elapsed:Float) {
     persistentUpdate = false;
-    if (curVideo != null && !curVideo.autoVolumeHandle) {
+    if (curVideo != null) {
         curVideo?.bitmap.volume = Math.floor(FlxMath.bound(getCalculatedVolume() * 1.5, 0, 1) * (100));
     }
 }

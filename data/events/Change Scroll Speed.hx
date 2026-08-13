@@ -1,4 +1,4 @@
-if (FlxG.save.data.scrollSpeedChange)
+if (!FlxG.save.data.scrollSpeedChange)
     disableScript();
 
 var scrollTween:FlxTween = null;

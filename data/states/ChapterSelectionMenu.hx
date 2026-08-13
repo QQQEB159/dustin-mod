@@ -108,6 +108,9 @@ function create() {
         FlxG.camera.addShader(screenVignette);
         FlxG.camera.addShader(bloom);
     }
+    
+    addTouchPad('LEFT_RIGHT', 'A_B');
+	addTouchPadCamera();
 }
 
 function update(elapsed:Float) {
@@ -121,7 +124,7 @@ function update(elapsed:Float) {
         FlxG.switchState(new ModState("NewStoryMenu"));
     }
 
-    if ((controls.ACCEPT || FlxG.mouse.justPressed) && curCard.ID == 0) {
+    if ((controls.ACCEPT) && curCard.ID == 0) {
         selectWeek();
     }
 }

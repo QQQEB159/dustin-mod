@@ -67,13 +67,16 @@ function postCreate() {
 
     importScript('data/scripts/dropshadow-effect');
 
-    shadows.dt = setupShader(dt);
-    shadows.dt.curZoom = 0;
-
-    shadows.dad = setupShader(dad);
-    shadows.boyfriend = setupShader(boyfriend);
-    shadows.boyfriend.angle = 123;
-	shadows.boyfriend.threshold = 0.05; // the brightness for your drop shadow
+    if (Options.gameplayShaders)
+    {
+        shadows.dt = setupShader(dt);
+        shadows.dt.curZoom = 0;
+    
+        shadows.dad = setupShader(dad);
+        shadows.boyfriend = setupShader(boyfriend);
+        shadows.boyfriend.angle = 123;
+    	shadows.boyfriend.threshold = 0.05; // the brightness for your drop shadow
+    }
     if (!Options.gameplayShaders) {
         boyfriend.shader = null;
         dad.shader = null;
@@ -135,8 +138,11 @@ function update(elapsed:Float) {
 
     if (updateDTLights)
         dtLights.alpha = lerp(dtLights.alpha, 0.85 + Math.sin(lightTimer) * 0.15, 0.05);
-    shadows.dad.curZoom = 0.75 * dtLights.alpha;
-    shadows.boyfriend.curZoom = 0.25 + 0.5 * dtLights.alpha;
+    if (Options.gameplayShaders)
+    {
+        shadows.dad.curZoom = 0.75 * dtLights.alpha;
+        shadows.boyfriend.curZoom = 0.25 + 0.5 * dtLights.alpha;
+    }
     if(Options.gameplayShaders && FlxG.save.data.bloom) {
         floorLights.shader.size = 0.5 * (3 + Math.sin(lightTimer * 0.25));
         floorLights.shader.brightness = 1 + (0.5 * (1 + Math.sin(lightTimer * 0.25)));
@@ -147,9 +153,12 @@ function update(elapsed:Float) {
     g_OVER2.alpha = g_OVER2.alpha * 0.5;
     lowerGLOW.alpha = g_OVER2.alpha = 0;
 
-    shadows.boyfriend.shader.charColor = [0, -0.2 * dtOVER.alpha, -0.2 * dtOVER.alpha, -1(1- boyfriend.alpha)];
-    shadows.dad.shader.charColor = [0, -0.2 * dtOVER.alpha, -0.2 * dtOVER.alpha, -(1 - dad.alpha)];
-    shadows.dt.shader.charColor = [0.05 * dtOVER.alpha, -0.2 * dtOVER.alpha, -0.2 * dtOVER.alpha, -1(1 - dt.alpha)];
+    if (Options.gameplayShaders)
+    {
+        shadows.boyfriend.shader.charColor = [0, -0.2 * dtOVER.alpha, -0.2 * dtOVER.alpha, -1(1- boyfriend.alpha)];
+        shadows.dad.shader.charColor = [0, -0.2 * dtOVER.alpha, -0.2 * dtOVER.alpha, -(1 - dad.alpha)];
+        shadows.dt.shader.charColor = [0.05 * dtOVER.alpha, -0.2 * dtOVER.alpha, -0.2 * dtOVER.alpha, -1(1 - dt.alpha)];
+    }
 
     //floorLights.shader.contrast = 1 + 2 * (1 + Math.sin(lightTimer));
     //trace(DT_lights.alpha);

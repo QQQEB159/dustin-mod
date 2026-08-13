@@ -1,4 +1,3 @@
-// SHADER MODDED BY LUNAR (YOU CAN USE THIS FOR WHATEVER IDC!!!!!)
 #pragma header
 
 uniform float time;
@@ -13,139 +12,63 @@ uniform bool flipY;
 uniform vec4 snowMeltRect;
 uniform bool snowMelts;
 
-// (https://www.shadertoy.com/view/ldscWH)
-/*
-	Smooth Noise Contours
-	---------------------
-
-    Using a cheap - but effective - hack to produce antialiased-looking contour lines without the 
-	need for supersampling. I had Airtight's elegant "Cartoon Fire" shader in mind when making this, 
-	and have provided a link to it below. 
-
-	I've always liked the abstract look of functional contour segments, lines, etc. There's a couple 
-	of ways to produce them, depending on the look you're going for. One method involves combining
-	your function value (noise, Voronoi, etc) with the "fract" function and the other involves 
-	stepping the function values with the "floor" function.
-
-    Each looks all right, except for the aliasing. You could take care of that with supersampling,
-	but it's a lot of work for the GPU, so I figured there might be a way to combine the "smoothstep" 
-	and "fwidth" functions to produce a smooth "fract" function. Since "x - fract(x)" is "floor(x)," 
-	you'd get the "floor" function too.
-
-	After playing around for a while, I came up with something that seems to work. As you can see,
-	the partitioned contours look relatively jaggy free, even after the application of border lines 
-	and highlighting.
-
-	Anyway, the smooth fract "sFract" and complimentary smooth floor "sFloor" functions are below.
-	They haven't undergone extensive testing, so I'd use them cautiously. :)
-
-	The rest is just coloring and highlighting. I went for a simplistic cardboard cutout, vector-graphic
-	style.
-
-	Similar examples:
-
-    Cartoon Fire - airtight
-	https://www.shadertoy.com/view/lsscWr
-
-    // More sophisticated smoothing method, but I might switch to this one in future.
-	Smooth Voronoi Contours - Shane
-    https://www.shadertoy.com/view/4sdXDX
-
-
-*/
-
-float ns;
-float sFract(float x, float sm){
-    float u = fract(x);
-    float width = 0.001;
-    float result = smoothstep(0.0, width, u);
-    return 1.0 - result;
-}
-float sFloor(float x){ return x - sFract(x, 1.0); } 
-vec3 hash33(vec3 p){ 
-    float n = sin(dot(p, vec3(7.0, 157.0, 113.0)));    
-    return fract(vec3(2097152.0, 262144.0, 32768.0)*n)*2.0 - 1.0;
-}
-float tetraNoise(in vec3 p){
-    vec3 i = floor(p + dot(p, vec3(1.0/3.0)));  p -= i - dot(i, vec3(1.0/6.0));
-    vec3 i1 = step(p.yzx, p); 
-    vec3 i2 = max(i1, 1.0 - i1.zxy); 
-    i1 = min(i1, 1.0 - i1.zxy);    
-    vec3 p1 = p - i1 + 1.0/6.0;
-    vec3 p2 = p - i2 + 1.0/3.0;
-    vec3 p3 = p - 0.5;
-    vec4 v = max(0.5 - vec4(dot(p, p), dot(p1, p1), dot(p2, p2), dot(p3, p3)), 0.0);
-    vec4 d = vec4(dot(p, hash33(i)), dot(p1, hash33(i + i1)), dot(p2, hash33(i + i2)), dot(p3, hash33(i + 1.0)));
-    return clamp(dot(d, v*v*v*8.0)*1.732 + 0.5, 0.0, 2.0);
-}
-float func(vec2 p){
-    float n = tetraNoise(vec3(p.x*4.0, p.y*4.0, 0.0) - vec3(0.0, 0.25, 0.5)*time);
-    float taper = 0.0 + dot(p, p*vec2(0.35, 1.0));
-	n = max(n - taper, 0.0)/max(1.0 - taper, 0.0001);
-    ns = n; 
-    const float palNum = 100.0; 
-    return n*0.25 + clamp(sFloor(n*(palNum - 0.001))/(palNum - 1.0), 0.0, 1.0)*0.75;
-}
-
-float coolNoise() {
-    vec2 u = (gl_FragCoord.xy - openfl_TextureSize.xy*0.4)/openfl_TextureSize.y;
-    float f = func(u);
-    float ssd = ns; 
-    return f*0.4 + ssd*0.6;
-}
-
 uniform int LAYERS;
 uniform float DEPTH;
 uniform float WIDTH;
 uniform float SPEED;
 uniform float OPACITY;
 
-const mat3 p = mat3(13.323122,23.5112,21.71123,21.1212,28.7312,11.9312,21.8112,14.7212,61.3934);
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+}
 
 void main()
 {
-	vec2 trueFragCoord = gl_FragCoord.xy * (res / openfl_TextureSize);
-
+    vec2 trueFragCoord = gl_FragCoord.xy * (res / openfl_TextureSize);
     vec2 centeredPixel = trueFragCoord - res.xy * 0.5;
-    vec2 zoomedCenteredPixel = centeredPixel * (1.0/(cameraZoom + 1.0));
+    vec2 zoomedCenteredPixel = centeredPixel / (cameraZoom + 1.0);
     vec2 pixel = zoomedCenteredPixel + res.xy * 0.5 + cameraPosition.xy;
-
-	vec2 uvCentered = (2.0 * (pixel) / (res.y));
+    vec2 uvCentered = (2.0 * pixel) / res.y;
     if (flipY) uvCentered.y *= -1.0;
-	
-	float meltiness = abs(1.0-((pixel.y-snowMeltRect.y)/snowMeltRect.w));
-	if (pixel.y >= snowMeltRect.y + snowMeltRect.w) meltiness = 0.0;
+    
+    float meltiness = abs(1.0 - (pixel.y - snowMeltRect.y) / snowMeltRect.w);
+    if (pixel.y >= snowMeltRect.y + snowMeltRect.w) meltiness = 0.0;
 
-	vec3 acc = vec3(0.0);
-	float dof = 5.0*sin(time*0.1);
-	int maxLayers = LAYERS;
-	if (maxLayers > 6) maxLayers = 6;
-	for (int i=STARTING_LAYERS; i<maxLayers; i++) {
-		float fi = float(i);
-		vec2 q = uvCentered*(1.0+fi*DEPTH);
-		q += vec2(0.0, SPEED*time/(1.0 + fi*DEPTH*0.03));
-		vec3 n = vec3(floor(q),31.189+fi);
-		vec3 m = floor(n)*0.00001 + fract(n);
-		vec3 mp = (31415.9+m)/fract(p*m);
-		vec3 r = fract(mp);
-		vec2 s = abs(mod(q,1.0)-0.5+0.9*r.xy-0.45);
-		s += 0.01*abs(2.0*fract(10.0*q.yx)-1.0); 
-		float d = 0.6*max(s.x-s.y,s.x+s.y)+max(s.x,s.y)-0.01;
-		float edge = 0.005+0.05*min(0.5*abs(fi-5.0-dof),1.0);
-		acc += vec3(smoothstep(edge,-edge,d)*(r.x/(1.0+0.02*fi*DEPTH)));
-	}
+    vec3 acc = vec3(0.0);
+    float dof = 5.0 * sin(time * 0.1);
 
-	vec4 rect = vec4((snowMeltRect.x / openfl_TextureSize.x) * res.x,
-        (snowMeltRect.y / openfl_TextureSize.y) * res.y,
-        (snowMeltRect.z / openfl_TextureSize.x) * res.x,
-        (snowMeltRect.w / openfl_TextureSize.y) * res.y);
-	rect.xy += openfl_TextureSize.xy-res.xy;
+    for (int i = STARTING_LAYERS; i < LAYERS; i++) {
+        float fi = float(i);
+        float scale = 1.0 + fi * DEPTH;
+        float invScale = 1.0 / scale;
 
-	if (snowMelts && ((pixel.x >= rect.x) && (pixel.x < rect.x + rect.z) && (pixel.y >= rect.y)))
-		acc *= meltiness;
+        vec2 q = uvCentered * scale;
+        q.y += SPEED * time * invScale;
 
-    vec4 flixelColor = texture2D(bitmap, openfl_TextureCoordv.xy);
-	gl_FragColor = flixelColor + vec4(acc * vec3(1.0, 1.0, 0.6) * 0.8 * (0.6 + (coolNoise() * 0.4)), flixelColor.a) * OPACITY;
-	// if (snowMelts && ((pixel.x >= rect.x) && (pixel.x < rect.x + rect.z) && (pixel.y >= rect.y)))
-	// 	gl_FragColor = vec4(vec3(meltiness), 1.);
+        vec2 cell = floor(q);
+        vec2 r = vec2(hash(cell + fi), hash(cell + fi + 1.0));
+        vec2 center = cell + 0.5 + (r - 0.5) * 0.9;
+
+        float d = length(q - center);
+        float edge = 0.05 * invScale;
+        float brightness = 1.0 - smoothstep(0.0, edge, d);
+        brightness *= r.x / (1.0 + 0.02 * fi * DEPTH);
+
+        acc += brightness;
+    }
+
+    vec4 rect = vec4((snowMeltRect.x / openfl_TextureSize.x) * res.x,
+                     (snowMeltRect.y / openfl_TextureSize.y) * res.y,
+                     (snowMeltRect.z / openfl_TextureSize.x) * res.x,
+                     (snowMeltRect.w / openfl_TextureSize.y) * res.y);
+    rect.xy += openfl_TextureSize.xy - res.xy;
+
+    if (snowMelts && (pixel.x >= rect.x) && (pixel.x < rect.x + rect.z) && (pixel.y >= rect.y))
+        acc *= meltiness;
+
+    float noiseFactor = fract(sin(dot(pixel * 0.1 + time, vec2(12.9898, 78.233))) * 43758.5453);
+    float brightness = 0.6 + noiseFactor * 0.4;
+
+    vec4 flixelColor = flixel_texture2D(bitmap, openfl_TextureCoordv.xy);
+    gl_FragColor = flixelColor + vec4(acc * vec3(1.0, 1.0, 0.6) * 0.8 * brightness, flixelColor.a) * OPACITY;
 }

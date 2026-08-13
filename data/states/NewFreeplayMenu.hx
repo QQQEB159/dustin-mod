@@ -8,6 +8,7 @@ import flixel.text.FlxText.FlxTextBorderStyle;
 import flixel.addons.effects.FlxTrail;
 import funkin.savedata.FunkinSave;
 import funkin.backend.MusicBeatState;
+import mobile.funkin.backend.utils.TouchUtil;
 
 using StringTools;
 
@@ -251,12 +252,11 @@ function create() {
         if (FlxG.save.data.static) {
             tvScreen.addShader(oldstatic);
             frontCam.addShader(oldstatic);
+            tvScreen.addShader(tape_noise);
+        }
 
             if (FlxG.save.data.bloom) for(cam in [tvScreen, FlxG.camera, frontCam]) cam.addShader(bloom);
             if (FlxG.save.data.glitch) for(cam in [tvScreen, FlxG.camera, frontCam]) cam.addShader(glitch);
-
-            tvScreen.addShader(tape_noise);
-        }
     }
 
     nullObjectText = new FunkinText(0, 0, FlxG.width, "> NULL OBJECT EXCEPTION", 30, false);
@@ -492,13 +492,11 @@ function create() {
     barBottom.camera = frontCam;
     add(barBottom);
 
-    if (!Options.gameplayShaders || !FlxG.save.data.bloom) {
-        whiteCover = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
-        whiteCover.scrollFactor.set();
-        whiteCover.blend = 0;
-        whiteCover.camera = frontCam;
-        add(whiteCover).alpha = 0;
-    }
+    whiteCover = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
+    whiteCover.scrollFactor.set();
+    whiteCover.blend = 0;
+    whiteCover.camera = frontCam;
+    add(whiteCover).alpha = 0;
 
     varientQNA = new FlxSpriteGroup();
     varientQNA.scrollFactor.set();
@@ -535,6 +533,9 @@ function create() {
     }
 
     frontPortrait.camera = frontCam;
+    
+    addTouchPad('LEFT_FULL', 'A_B');
+	addTouchPadCamera();
 }
 
 
@@ -545,7 +546,7 @@ function update(elapsed:Float) {
     iTime += elapsed;
     glitch.iTime = iTime;
 
-    if (waitingVariantResponse && FlxG.keys.justPressed.ANY) {
+    if (waitingVariantResponse && (FlxG.keys.justPressed.ANY || TouchUtil.justPressed)) {
         waitingVariantResponse = false;
         FlxG.sound.play(Paths.sound("menu/confirm"));
         FlxTween.cancelTweensOf(varientQNA);
@@ -664,7 +665,7 @@ function update(elapsed:Float) {
         }, true);
     }
 
-    if (!waitingVariantResponse && allowInput && (controls.ACCEPT || FlxG.mouse.justPressed)) {
+    if (!waitingVariantResponse && allowInput && (controls.ACCEPT)) {
         allowInput = false;
         selectSong();
     }

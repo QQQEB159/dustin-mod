@@ -81,11 +81,11 @@ function update(elapsed:Float) {
                 menu.health = -1;
                 switch (menu.rawName) {
                     case "optionsTree.gameplay-name":
-                        menu.members.remove(menu.members[2]); // remove naughtyness
+                        menu.members.remove(menu.members[3]); // remove naughtyness
 
                         final cneVersion = FlxG.stage.application.meta.get('version');
                         if (Flags.CURRENT_API_VERSION < 2 || cneVersion == "1.0.1") {
-                            menu.members.remove(menu.members[8]); // remove stream vocals due to issues with memory
+                            menu.members.remove(menu.members[9]); // remove stream vocals due to issues with memory
                         }
 
                         var noHitCheckbox:Checkbox = null;

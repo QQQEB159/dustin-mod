@@ -37,7 +37,7 @@ var infoTween:Dynamic;
 var infW = 900, infH = 400;
 var offY:Float;
 var infX:Float, infY:Float;
-
+var exitText:FunkinText;
 
 function create():Void {
 
@@ -100,7 +100,7 @@ function create():Void {
     rightArrow.y = FlxG.height / 2 - rightArrow.height / 2;
     add(rightArrow);
 
-    sText = new FlxText(0, 500, 500, "PRESS ENTER TO SHOW STORY", 40, true);
+    sText = new FlxText(0, 500, 500, "CLICK IMAGE TO SHOW STORY", 40, true);
     sText.setFormat(Paths.font("8bit-jve.ttf"), 40, FlxColor.WHITE, FlxTextAlign.CENTER);
     sText.x = FlxG.width / 2 - sText.width / 2;
     sText.y = FlxG.height - 30 - sText.height;
@@ -148,16 +148,23 @@ function create():Void {
     storyText.wordWrap = true;
     storyText.set_alpha(0);
     add(storyText);
+    
+    exitText = new FunkinText(0, 660, FlxG.width, "< EXIT", 46);
+    exitText.alignment = FlxTextAlign.LEFT;
+    exitText.fieldWidth = 150;
+    exitText.fieldHeight = 50;
+    exitText.setFormat(Paths.font("8bit-jve.ttf"), 46, FlxColor.WHITE, FlxTextAlign.LEFT);
+    add(exitText);
 }
 
 function update(elapsed:Float):Void {
-    if (infoVisible && controls.BACK) {
+    if (infoVisible && (controls.BACK || FlxG.mouse.justPressed && FlxG.mouse.overlaps(exitText))) {
         cooldownTimer = 0.5;
         _hideInfo();
         return;
     }
 
-    if (!infoVisible && (controls.BACK || controls.BACK)) {
+    if (!infoVisible && (controls.BACK || FlxG.mouse.justPressed && FlxG.mouse.overlaps(exitText))) {
         FlxG.switchState(new ModState("gallery/GalleryState"));
         return;
     }
@@ -177,7 +184,7 @@ function update(elapsed:Float):Void {
         animateArrow(rightArrow);
     }
 
-    if (FlxG.keys.justPressed.ENTER) {
+    if (FlxG.keys.justPressed.ENTER || FlxG.mouse.justPressed && FlxG.mouse.overlaps(imageDisplay)) {
         cooldownTimer = 0.5;
         if (!infoVisible) _showInfo();
         else _hideInfo();

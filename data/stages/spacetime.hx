@@ -80,6 +80,8 @@ function postCreate() {
     if (camHUD.downscroll) {
         gasterBlaster.y -= 480;
     }
+    
+    setMobileControlsColor(0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF);
 }
 
 function update(elapsed:Float) {

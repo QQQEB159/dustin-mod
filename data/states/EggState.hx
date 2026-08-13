@@ -112,8 +112,8 @@ function create() {
     add(heart);
 
     #if mobile
-    addMobilePad('UP_DOWN', 'A');
-    addMobilePadCamera();
+    addTouchPad('UP_DOWN', 'A');
+    addTouchPadCamera();
     #end
 }
 

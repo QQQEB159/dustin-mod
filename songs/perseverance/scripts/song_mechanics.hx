@@ -1,4 +1,5 @@
-//
+import funkin.backend.MusicBeatState;
+
 var blaster:FlxSprite;
 var space:FlxSprite;
 
@@ -48,7 +49,7 @@ function stepHit(step:Int) {
                 boyfriend.playAnim("dodge", true);
         case 2280: 
             // FlxTween.cancelTweensOf(blaster); blaster.y = 920;
-            if (!dodging) health = 0.05;
+            if (!dodging && FlxG.save.data.mechanics) health = 0.05;
             canDodge = false;
 
             space.visible = false;
@@ -121,7 +122,7 @@ function update(elapsed:Float) {
 
     if (!FlxG.save.data.mechanics) return;
 
-    if (!dodging && dodgeCooldown <= 0 && canDodge && FlxG.keys.justPressed.SPACE) {
+    if (!dodging && dodgeCooldown <= 0 && canDodge && (FlxG.keys.justPressed.SPACE || MusicBeatState.getState().mobileControls.instance.buttonExtra.justPressed)) {
         dodging = true; dodgeTimer = .8; 
         boyfriend.playAnim("dodge", true);
     }

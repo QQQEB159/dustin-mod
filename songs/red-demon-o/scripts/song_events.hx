@@ -222,6 +222,7 @@ function stepHit(step:Int) {
 			if(step == 1152) {
 				for (cam in [camCharacters, camHUD, camHUD2, camHUD3, camHUD4]) FlxG.cameras.remove(cam, false);
 				for (cam in [camHUD3, camCharacters, camHUD4, camHUD, camHUD2]) {FlxG.cameras.add(cam, cam == camGame);}
+				enableSpaceBar(false);
 			}
 		case 704 | 1344:
 			timing = 0.015;
@@ -278,6 +279,7 @@ function stepHit(step:Int) {
 			for (cam in [camCharacters, camHUD3, camHUD4, camHUD, camHUD2]) {FlxG.cameras.add(cam, cam == camGame);}
 			fillColorBG = 0xffff0000;
 			fillColor = 0xffffffff;
+			enableSpaceBar(false);
 		case 1792:
 			timing = 0.015;
 			fillColorBG = 0xff6b002b;

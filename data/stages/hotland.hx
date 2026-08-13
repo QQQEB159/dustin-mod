@@ -110,6 +110,8 @@ function postCreate() {
         if (FlxG.save.data.bloom) camCharacters.addShader(bloom);
         if (FlxG.save.data.saturation) camCharacters.addShader(contrast);
     }
+    
+    setMobileControlsColor(0xFFC15700, 0xFFC15700, 0xFFC15700, 0xFFC15700);
 }
 
 function onDadHit(event) {

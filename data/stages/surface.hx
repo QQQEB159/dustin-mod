@@ -105,7 +105,7 @@ function create() {
 	darkenShader.gradientY = 0.32;
 	darkenShader.gradientHeight = 0.125;
 
-	camGame.addShader(darkenShader);
+	if (Options.gameplayShaders) camGame.addShader(darkenShader);
 
 	sun.blend = BlendMode.ADD;
 	sun.alpha = 0.55;
@@ -416,11 +416,11 @@ function postCreate() {
 		insert(members.indexOf(picoChar), ghostSpriteBuffer);
 		for (character in [tankmanGhostChar, steveGhostChar, drummerGhostChar, steveChar])
 			character.camera = ghostCamera;
-	}
 
 	initializeShadow(dad, 1274, 0.5, 90, -30, 0.08, 0.04, 0.1, 10, (spr) -> {spr.frameOffset.add(10, -23); spr.skew.y = 2;});
 	initializeShadow(boyfriend, 1274, 0.5, 90, 30, 0.08, 0.04, 0.1, 10, (spr) -> spr.frameOffset.add(90, 552));
 	initializeShadow(picoChar, 1080, 0.5, 110, 0, 0.08, 0.04, 0.1, 10, (spr) -> spr.frameOffset.add(0, 490));
+	}
 
 	baseSteveGhostX = steveGhostChar.x;
 	baseSteveGhostY = steveGhostChar.y;
@@ -434,10 +434,13 @@ function postCreate() {
 		params: [false, 0xFF000000, 1, 4, "linear", "In", "camHUD", "front"]
 	});
 
-	darkenShader.strength = 0.9;
-	bloomShader.threshold = 0.65;
-	bloomShader.size = 30;
-	bloomShader.quality = 5;
+	if (Options.gameplayShaders) darkenShader.strength = 0.9;
+	if (Options.gameplayShaders && FlxG.save.data.bloom)
+    {
+    	bloomShader.threshold = 0.65;
+    	bloomShader.size = 30;
+    	bloomShader.quality = 5;
+    }
 
 	if (Options.gameplayShaders) camHUD.removeShader(bloomHUDShader);
 }
@@ -548,17 +551,26 @@ function stepHit(step:Int) {
 			FlxTween.tween(tankmanGhostChar, {alpha: 0.9}, 1, {ease: FlxEase.quadInOut});
 			FlxTween.tween(steveGhostChar, {alpha: 0.9}, 1, {ease: FlxEase.quadInOut});
 			FlxTween.tween(drummerGhostChar, {alpha: 0.9}, 1, {ease: FlxEase.quadInOut});
-			FlxTween.num(darkenShader.strength, 0, 1, {ease: FlxEase.quadInOut}, (f) -> darkenShader.strength = f);
-			FlxTween.num(darkenShader.threshold, 0.7, 1, {ease: FlxEase.quadOut}, (f) -> bloomShader.threshold = f);
-			FlxTween.num(bloomShader.size, 60, 1, {ease: FlxEase.quadOut}, (f) -> bloomShader.size = f);
+			if (Options.gameplayShaders)
+			{
+    			FlxTween.num(darkenShader.strength, 0, 1, {ease: FlxEase.quadInOut}, (f) -> darkenShader.strength = f);
+    			FlxTween.num(darkenShader.threshold, 0.7, 1, {ease: FlxEase.quadOut}, (f) -> bloomShader.threshold = f);
+    		    if (FlxG.save.data.bloom) FlxTween.num(bloomShader.size, 60, 1, {ease: FlxEase.quadOut}, (f) -> bloomShader.size = f);
+		    }
 
 		case 416:
-			darkenShader.strength = 0.0;
-			bloomShader.quality = 3;
-			bloomShader.size = 60;
-			bloomShader.brightness = 2.0;
-			bloomShader.quality = 3;
-			bloomShader.threshold = 0.7;
+			if (Options.gameplayShaders)
+			{
+    			darkenShader.strength = 0.0;
+    			if (FlxG.save.data.bloom)
+    			{
+        			bloomShader.quality = 3;
+        			bloomShader.size = 60;
+        			bloomShader.brightness = 2.0;
+        			bloomShader.quality = 3;
+        			bloomShader.threshold = 0.7;
+        		}
+    		}
 
 		case 1122:
 			FlxTween.tween(steveChar, {alpha: 0.5}, 0.5, {ease: FlxEase.quadInOut});
@@ -670,22 +682,34 @@ function stepHit(step:Int) {
 			targetFloatSpeed = 2;
 
 		case 2368:
-			darkenShader.strength = 0.9;
-			bloomShader.threshold = 0.675;
-			bloomShader.size = 30;
-			bloomShader.quality = 5;
+			if (Options.gameplayShaders) 
+			{
+    			darkenShader.strength = 0.9;
+    			if (FlxG.save.data.bloom)
+    			{
+        			bloomShader.threshold = 0.675;
+        			bloomShader.size = 30;
+        			bloomShader.quality = 5;
+        		}
+    		}
 
 		case 2432:
 			FlxTween.tween(steveGhostChar, {alpha: 0.9}, 0.7, {ease: FlxEase.quadInOut});
 
 		case 2624:
 			FlxTween.tween(drummerGhostChar, {alpha: 0.75}, 0.7, {ease: FlxEase.quadInOut});
-			darkenShader.strength = 0.0;
-			bloomShader.quality = 3;
-			bloomShader.size = 60;
-			bloomShader.brightness = 2.0;
-			bloomShader.quality = 3;
-			bloomShader.threshold = .7;
+			if (Options.gameplayShaders)
+			{
+    			darkenShader.strength = 0.0;
+    			if (FlxG.save.data.bloom)
+    			{
+        			bloomShader.quality = 3;
+        			bloomShader.size = 60;
+        			bloomShader.brightness = 2.0;
+        			bloomShader.quality = 3;
+        			bloomShader.threshold = .7;
+        		}
+    		}
 
 		case 2880:
 			FlxTween.tween(tankmanGhostChar, {alpha: 0.9}, 0.7, {ease: FlxEase.quadInOut});
@@ -717,10 +741,16 @@ function stepHit(step:Int) {
 			FlxTween.tween(tankmanGhostChar, {alpha: 0}, 4, {ease: FlxEase.quadInOut});
 
 		case 3264:
-			darkenShader.strength = 0.95;
-			bloomShader.threshold = 0.45;
-			bloomShader.size = 30;
-			bloomShader.quality = 5;
+			if (Options.gameplayShaders)
+			{
+    			darkenShader.strength = 0.95;
+    			if (FlxG.save.data.bloom)
+    			{
+        			bloomShader.threshold = 0.45;
+        			bloomShader.size = 30;
+        			bloomShader.quality = 5;
+        		}
+			}
 
 		case 3312:
 			FlxTween.tween(steveChar, {alpha: 0.7}, 1, {ease: FlxEase.quadInOut});

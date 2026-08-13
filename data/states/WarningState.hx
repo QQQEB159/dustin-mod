@@ -11,7 +11,7 @@ function postCreate() {
 
     FlxG.camera.flash(0xFF000000, .3);
     MusicBeatState.skipTransIn = MusicBeatState.skipTransOut = true;
-    disclaimer.text = "This mod uses alot of shaders and may lag on low end devices.\n\nYou can turn them off with the options menu:\nAppearance  >  Advanced  >  #Gameplay Shaders#\n\nHeavy *flashing lights* lights are also used, please proceed with caution!!!\n\n_Press ENTER/LEFT CLICK to continue._";
+    disclaimer.text = "This mod uses alot of shaders and may lag on low end devices.\n\nYou can turn them off with the options menu:\nAppearance  >  Advanced  >  #Gameplay Shaders#\n\nHeavy *flashing lights* lights are also used, please proceed with caution!!!\n\n_Tap the screen to continue._";
     disclaimer.applyMarkup(disclaimer.text, [
         new FlxTextFormatMarkerPair(new FlxTextFormat(0xFFFF5D5D), "*"),
         new FlxTextFormatMarkerPair(new FlxTextFormat(0xFF55DAFF), "#"),

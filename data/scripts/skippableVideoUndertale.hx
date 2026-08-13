@@ -55,7 +55,7 @@ function startVideo(name:String, ?leCallback:Void->Void, ?ext:String, ?usePath:B
         // Does nothing if fails
     }
 
-    add(skipText = textCrispy(new FunkinText(-28, FlxG.height - 50 - 6, FlxG.width, "Hold ENTER/LEFT CLICK to skip...").setFormat(Paths.font('8bit-jve.ttf'), 32, 0xffffffff, "right", FlxTextBorderStyle.OUTLINE, 0xff000000)));
+    add(skipText = textCrispy(new FunkinText(-28, FlxG.height - 50 - 6, FlxG.width, "Tap and hold to skip...").setFormat(Paths.font('8bit-jve.ttf'), 32, 0xffffffff, "right", FlxTextBorderStyle.OUTLINE, 0xff000000)));
     skipText.scrollFactor.set();
     skipText.borderSize = 3;
     skipText.cameras = [cutsceneCamera];

@@ -274,7 +274,7 @@ function onEventCreation() {
         if(!finalHours) {
             //trace('crash out');
             snow.set("isOn", false);
-            particleSprite.destroy();
+            if (Options.gameplayShaders) particleSprite.destroy();
             FlxG.camera.removeShader(snowShader2);
             //FlxG.camera.removeShader(snowShader);
         }

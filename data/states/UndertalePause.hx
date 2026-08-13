@@ -1,6 +1,7 @@
 //
 import funkin.options.keybinds.KeybindsOptions;
 import funkin.editors.charter.Charter;
+import mobile.funkin.backend.utils.TouchUtil;
 
 var dialogueBoxBG = PlayState.instance.scripts.importScript("data/scripts/DialogueBoxBG");
 var funkinTypeText = PlayState.instance.scripts.importScript("data/scripts/FunkinTypeText");
@@ -224,20 +225,23 @@ function create(_) {
 		dustinPauseScript.setParent(__script__.parent);
 		dustinPauseScript.call("onPause", [__script__.interp.variables, _]);
 	}
+	
+	addTouchPad('UP_DOWN', 'A');
+	addTouchPadCamera();
 }
 
 var __offsets:Array<Int>;
 function update(elapsed:Float) {
 	if (post != (post = true))
 		dustinPauseScript?.call("onPostPause");
-	var upP = controls.UP_P;
-	var downP = controls.DOWN_P;
-	var accepted = controls.ACCEPT;
+	var upP = (controls.UP_P #if TOUCH_CONTROLS || touchPad != null && touchPad.buttonUp.justPressed #end);
+	var downP = (controls.DOWN_P #if TOUCH_CONTROLS || touchPad != null && touchPad.buttonDown.justPressed #end);
+	var accepted = controls.ACCEPT #if TOUCH_CONTROLS || touchPad != null && touchPad.buttonA.justPressed #end;
 
 	var change = (upP ? -1 : 0) + (downP ? 1 : 0) - FlxG.mouse.wheel;
     if (change != 0) changeSelection(change, false);
 
-	if (accepted || FlxG.mouse.justPressed)
+	if (accepted)
 		selectOption();
 
 	for (i in utItems) 

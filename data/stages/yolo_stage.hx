@@ -20,7 +20,7 @@ function postCreate() if (Options.gameplayShaders && FlxG.save.data.bloom) {
 function update() {
     stageLerp = lerp(stageLerp, 1, FlxG.save.data.antiFlash ? 0.05 : 0.1);
 
-    if (!Options.gameplayShaders && FlxG.save.data.bloom) return;
+    if (!Options.gameplayShaders || !FlxG.save.data.bloom) return;
     stageBloom.brightness = stageLerp;
     stageBloom.size = (FlxG.save.data.antiFlash ? 20 : 40) * stageLerp;
 }
