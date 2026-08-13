@@ -447,7 +447,7 @@ function select() {
                         blockInput = true;
                         FlxG.sound.music.fadeOut(0.75,0);
 
-                        if (FlxG.save.data.particles) {
+                        if (FlxG.save.data.particles && Options.gameplayShaders) {
                             FlxTween.num(snowOpacity, 0, 1, {ease: FlxEase.quartOut}, (val:Float) -> {
                                 snowOpacity = val;
                             });
@@ -463,7 +463,7 @@ function select() {
                         blockInput = true;
                         FlxG.sound.music.fadeOut(0.75,0);
 
-                        if (FlxG.save.data.particles) {
+                        if (FlxG.save.data.particles && Options.gameplayShaders) {
                             FlxTween.num(snowOpacity, 0, 1, {ease: FlxEase.quartOut}, (val:Float) -> {
                                 snowOpacity = val;
                             });

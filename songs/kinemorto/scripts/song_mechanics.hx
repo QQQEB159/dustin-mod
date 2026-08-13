@@ -10,6 +10,7 @@ function create() {
     bones.antialiasing = Options.antialiasing;
     bones.cameras = [camHUD];
     bones.x = FlxG.width + bones.width;
+    if (Options.middleScroll) bones.scale.set(2.3, 1);
     bones.scrollFactor.set();
 }
 

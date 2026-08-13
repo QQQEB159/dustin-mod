@@ -140,20 +140,23 @@ function stepHit(step:Int) {
             tape_noise.strength = 1;
             water.strength = 0.3;
 
-            for (strumLine in strumLines) {
-                for (sprite in strumLine.members) {
-                    if (sprite != null) {
-                        FlxTween.tween(sprite, {x: sprite.x + 250}, 1, {
-                            ease: FlxEase.quadOut,
-                        });
+            if (!Options.middleScroll)
+            {
+                for (strumLine in strumLines) {
+                    for (sprite in strumLine.members) {
+                        if (sprite != null) {
+                            FlxTween.tween(sprite, {x: sprite.x + 250}, 1, {
+                                ease: FlxEase.quadOut,
+                            });
+                        }
                     }
-                }
-
-                for (note in strumLine.notes) {
-                    if (note != null) {
-                        FlxTween.tween(note, {x: note.x + 250}, 1, {
-                            ease: FlxEase.quadOut,
-                        });
+    
+                    for (note in strumLine.notes) {
+                        if (note != null) {
+                            FlxTween.tween(note, {x: note.x + 250}, 1, {
+                                ease: FlxEase.quadOut,
+                            });
+                        }
                     }
                 }
             }
@@ -163,20 +166,23 @@ function stepHit(step:Int) {
             kinemorto.alpha = 0;
             water.strength = 0.5;
             light_player.alpha = 0.4;
-            for (strumLine in strumLines) {
-                for (sprite in strumLine.members) {
-                    if (sprite != null) {
-                        FlxTween.tween(sprite, {x: sprite.x - 250}, 1, {
-                            ease: FlxEase.quadOut,
-                        });
+            if (!Options.middleScroll)
+            {
+                for (strumLine in strumLines) {
+                    for (sprite in strumLine.members) {
+                        if (sprite != null) {
+                            FlxTween.tween(sprite, {x: sprite.x - 250}, 1, {
+                                ease: FlxEase.quadOut,
+                            });
+                        }
                     }
-                }
-
-                for (note in strumLine.notes) {
-                    if (note != null) {
-                        FlxTween.tween(note, {x: note.x - 250}, 1, {
-                            ease: FlxEase.quadOut,
-                        });
+    
+                    for (note in strumLine.notes) {
+                        if (note != null) {
+                            FlxTween.tween(note, {x: note.x - 250}, 1, {
+                                ease: FlxEase.quadOut,
+                            });
+                        }
                     }
                 }
             }
@@ -259,20 +265,23 @@ function stepHit(step:Int) {
                 element.visible = true;
             }
 
-            for (strumLine in strumLines) {
-                for (sprite in strumLine.members) {
-                    if (sprite != null) {
-                        FlxTween.tween(sprite, {x: sprite.x + 250}, 1, {
-                            ease: FlxEase.quadOut,
-                        });
+            if (!Options.middleScroll)
+            {
+                for (strumLine in strumLines) {
+                    for (sprite in strumLine.members) {
+                        if (sprite != null) {
+                            FlxTween.tween(sprite, {x: sprite.x + 250}, 1, {
+                                ease: FlxEase.quadOut,
+                            });
+                        }
                     }
-                }
-
-                for (note in strumLine.notes) {
-                    if (note != null) {
-                        FlxTween.tween(note, {x: note.x + 250}, 1, {
-                            ease: FlxEase.quadOut,
-                        });
+    
+                    for (note in strumLine.notes) {
+                        if (note != null) {
+                            FlxTween.tween(note, {x: note.x + 250}, 1, {
+                                ease: FlxEase.quadOut,
+                            });
+                        }
                     }
                 }
             }

@@ -81,21 +81,21 @@ function update(elapsed:Float) {
                 menu.health = -1;
                 switch (menu.rawName) {
                     case "optionsTree.gameplay-name":
-                        menu.members.remove(menu.members[2]); // remove naughtyness
+                        menu.members.remove(menu.members[3]); // remove naughtyness
 
                         final cneVersion = FlxG.stage.application.meta.get('version');
                         if (Flags.CURRENT_API_VERSION < 2 || cneVersion == "1.0.1") {
-                            menu.members.remove(menu.members[8]); // remove stream vocals due to issues with memory
+                            menu.members.remove(menu.members[9]); // remove stream vocals due to issues with memory
                         }
 
                         var noHitCheckbox:Checkbox = null;
                         var mechanicsHitCheckbox:Checkbox = null;
                         var scrollSpeedChangeCheckbox:Checkbox = null;
 
-                        menu.insert(1, noHitCheckbox = new Checkbox("No Hit Mode", "Don't miss a note or you lose!!! Effects exp gained after songs (#1X Multipler# -> _2X Multipler_).", "nh", null, FlxG.save.data));
-                        menu.insert(1, scrollSpeedChangeCheckbox = new Checkbox("Scroll Speed Changes", "Enable/Disable any scroll speed changes midsong.", "scrollSpeedChange", null, FlxG.save.data));
-                        menu.insert(1, mechanicsHitCheckbox = new Checkbox("Mechanics", "Enable/Disable Gameplay Mechanics, effects exp gained after songs (#1X Multipler# -> *.5X Multipler*).", "mechanics", null, FlxG.save.data));
-                        menu.insert(1, new Checkbox("Window Shake", "Enable/Disable this if you want cool monitor movements while you're playing the game (not effective if you play on fullscreen!)", "mWindow", null, FlxG.save.data));
+                        menu.insert(2, noHitCheckbox = new Checkbox("No Hit Mode", "Don't miss a note or you lose!!! Effects exp gained after songs (#1X Multipler# -> _2X Multipler_).", "nh", null, FlxG.save.data));
+                        menu.insert(2, scrollSpeedChangeCheckbox = new Checkbox("Scroll Speed Changes", "Enable/Disable any scroll speed changes midsong.", "scrollSpeedChange", null, FlxG.save.data));
+                        menu.insert(2, mechanicsHitCheckbox = new Checkbox("Mechanics", "Enable/Disable Gameplay Mechanics, effects exp gained after songs (#1X Multipler# -> *.5X Multipler*).", "mechanics", null, FlxG.save.data));
+                        menu.insert(2, new Checkbox("Window Shake", "Enable/Disable this if you want cool monitor movements while you're playing the game (not effective if you play on fullscreen!)", "mWindow", null, FlxG.save.data));
 
                         for (i => checkBox in [mechanicsHitCheckbox, scrollSpeedChangeCheckbox, noHitCheckbox])
                             checkBox.members[0].color = FlxColor.interpolate(0xFF8CDBFF, 0xFFC9FEFF, i/3);

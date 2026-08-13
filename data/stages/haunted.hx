@@ -265,14 +265,31 @@ function stepHit(step:Int) {
             FlxTween.tween(boyfriend, {x: ogboyfriend}, 3, {ease: FlxEase.quintOut});
 
         case 56:
+            if (Options.middleScroll) cpuStrums.visible = true;
             for (strum in cpuStrums.members) {
-                    strum.x += 225;
-                    strum.y += 30;
+                    if (Options.middleScroll)
+                    {
+                        strum.x -= 90;
+                        strum.y += 30;
+                    }
+                    else
+                    {
+                        strum.x += 225;
+                        strum.y += 30;
+                    }
             }
 
             for (strum in playerStrums.members) {
-                    strum.x += 435;
-                    strum.y += 30;
+                    if (Options.middleScroll)
+                    {
+                        strum.x += 760;
+                        strum.y += 30;
+                    }
+                    else
+                    {
+                        strum.x += 435;
+                        strum.y += 30;
+                    }
             }
 
             for (strum in playerStrums.members) 
@@ -333,7 +350,8 @@ function stepHit(step:Int) {
 
              for (strum in playerStrums.members) {
                 strum.cameras = [camHUD];
-                strum.x -= 435;
+                if (Options.middleScroll) strum.x -= 760;
+                else strum.x -= 435;
                 strum.y -= 30; 
                 strum.alpha = 0.8;  
             }

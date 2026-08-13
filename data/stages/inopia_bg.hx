@@ -30,6 +30,10 @@ function postCreate() {
 
     for (strum in strumLines.members[2].members)
         strum.x += -320;
+    
+    if (Options.middleScroll)
+        for (strum in strumLines.members[2].members)
+            strum.visible = false;
 
 
     deer.visible = false;
@@ -121,24 +125,27 @@ function shiftStrums():Void {
         }
     }
 
-    for (strumLine in strumLines) {
-        for (sprite in strumLine.members) {
-            if (sprite != null) {
-                tweensLeft++;
-                FlxTween.tween(sprite, {x: sprite.x + shift}, tweenTime, {
-                    ease: FlxEase.quadOut,
-                    onComplete: onTweenComplete
-                });
+    if (!Options.middleScroll)
+    {
+        for (strumLine in strumLines) {
+            for (sprite in strumLine.members) {
+                if (sprite != null) {
+                    tweensLeft++;
+                    FlxTween.tween(sprite, {x: sprite.x + shift}, tweenTime, {
+                        ease: FlxEase.quadOut,
+                        onComplete: onTweenComplete
+                    });
+                }
             }
-        }
-
-        for (note in strumLine.notes) {
-            if (note != null) {
-                tweensLeft++;
-                FlxTween.tween(note, {x: note.x + shift}, tweenTime, {
-                    ease: FlxEase.quadOut,
-                    onComplete: onTweenComplete
-                });
+    
+            for (note in strumLine.notes) {
+                if (note != null) {
+                    tweensLeft++;
+                    FlxTween.tween(note, {x: note.x + shift}, tweenTime, {
+                        ease: FlxEase.quadOut,
+                        onComplete: onTweenComplete
+                    });
+                }
             }
         }
     }
