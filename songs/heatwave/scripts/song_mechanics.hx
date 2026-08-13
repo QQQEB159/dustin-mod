@@ -81,6 +81,7 @@ public function box_open_animation() {
     idealBoxWidth = 270;
     idealBoxHeight = 240;
     idealBoxAngle = 0;
+	mobileControls.instance.visible = false;
 
     battleBox.angle = 90;
 }
@@ -97,6 +98,7 @@ public function box_close_animation() {
     idealBoxWidth = 40;
     idealBoxHeight = 40;
     idealBoxAngle = 90;
+	mobileControls.instance.visible = true;
 
     new FlxTimer().start(.67, function () {
         FlxTween.tween(battleBox, {alpha:0}, .4);
