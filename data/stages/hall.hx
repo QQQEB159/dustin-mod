@@ -26,7 +26,7 @@ function postCreate() {
 
     bloom_new = new CustomShader("bloom_new");
     bloom_new.size = 20; bloom_new.brightness = 1.78;
-    bloom_new.directions = 16; bloom_new.quality = 5;
+    bloom_new.directions = 1; bloom_new.quality = 3;
     bloom_new.threshold = .75;
 
     // autoTitleCard = false;

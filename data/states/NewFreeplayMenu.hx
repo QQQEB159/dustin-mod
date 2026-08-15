@@ -22,8 +22,8 @@ var outlineSize:Float = 10;
 var bloom = new CustomShader("bloom");
 bloom.size = 1;
 bloom.brightness = 1;
-bloom.directions = 8;
-bloom.quality = 10;
+bloom.directions = 1;
+bloom.quality = 3;
 
 var glitch = new CustomShader("glitching");
 glitch.SPEED = 1;

@@ -12,7 +12,10 @@ function postCreate() {
 		botplayTxt.borderSize = 1.25;
 		add(botplayTxt);
 		
-		if (Options.middleScroll) botplayTxt.x += 400;
+		if (Options.middleScroll && PlayState.SONG.meta.name.toLowerCase() != "genocides") botplayTxt.x += 400;
+		
+		if (PlayState.SONG.meta.name.toLowerCase() == "genocides") botplayTxt.x = -320;
+		else if (PlayState.SONG.meta.name.toLowerCase() == "lorem-ipsum") botplayTxt.x = 350;
 
 		FlxTween.tween(botplayTxt, {alpha: 0}, 1, {type: FlxTweenType.PINGPONG, ease: FlxEase.sineInOut});
 

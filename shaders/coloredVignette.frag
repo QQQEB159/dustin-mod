@@ -3,27 +3,23 @@
 uniform vec3 color;
 uniform float amount;
 uniform float strength;
-
 uniform bool transperency;
 
 void main() {
-    vec4 flixelColor = flixel_texture2D(bitmap, openfl_TextureCoordv);
-    vec2 uv = getCamPos(openfl_TextureCoordv);
+    const vec2 center = vec2(0.5);
 
     if (transperency) {
-        float dist = distance(openfl_TextureCoordv, vec2(0.5));
+        vec4 flixelColor = flixel_texture2D(bitmap, openfl_TextureCoordv);
+        float dist = distance(openfl_TextureCoordv, center);
+        float vignette = 1.0 - amount * dist;
+        float vignetteStrength = 1.0 - pow(vignette, strength);
 
-        float vignette = mix(1.0, 1.0 - amount, dist);
-        float shapedVignette = pow(vignette, strength);  // stronger falloff
-        float vignetteStrength = 1.0 - shapedVignette;
-
-        vec3 vignetteColor = color * vignetteStrength;
-
-        gl_FragColor = flixelColor + vec4(vignetteColor, vignetteStrength);
+        gl_FragColor = flixelColor + vec4(color * vignetteStrength, vignetteStrength);
     } else {
+        vec2 uv = getCamPos(openfl_TextureCoordv);
         vec3 col = pow(textureCam(bitmap, uv).rgb, vec3(1.0 / strength));
 
-        float vignette = mix(1.0, 1.0 - amount, distance(uv, vec2(0.5)));
+        float vignette = 1.0 - amount * distance(uv, center);
         col = pow(mix(col * color, col, vignette), vec3(strength));
 
         gl_FragColor = vec4(col, 1.0);

@@ -86,8 +86,8 @@ function postCreate() {
         lightBloom = new CustomShader("bloom");
         lightBloom.size = 0;
         lightBloom.brightness = 5;
-        lightBloom.directions = 8;
-        lightBloom.quality = 10;
+        lightBloom.directions = 1;
+        lightBloom.quality = 3;
     }
 
     floorLights.shader = lightBloom;

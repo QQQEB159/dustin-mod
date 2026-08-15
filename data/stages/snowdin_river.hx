@@ -21,7 +21,7 @@ public var impact:CustomShader;
 function create() {
     bloom_new = new CustomShader("bloom_new");
     bloom_new.size = 10; bloom_new.brightness = 0;
-    bloom_new.directions = 16; bloom_new.quality = 3;
+    bloom_new.directions = 1; bloom_new.quality = 3;
     bloom_new.threshold = .5;
 
     fogShader = new CustomShader("fog");

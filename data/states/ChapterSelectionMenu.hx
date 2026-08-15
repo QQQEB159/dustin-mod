@@ -101,8 +101,8 @@ function create() {
     bloom = new CustomShader("bloom");
     bloom.size = 10;
     bloom.brightness = 2;
-    bloom.directions = 8;
-    bloom.quality = 10;
+    bloom.directions = 1;
+    bloom.quality = 3;
 
     if (Options.gameplayShaders) {
         FlxG.camera.addShader(screenVignette);

@@ -359,7 +359,7 @@ function doWashColor(cam:FlxCamera, col:Int, ther:Float, spread:Float) {
 
 	var bloom_new = new CustomShader("bloom_new");
     bloom_new.size = spread*.7; bloom_new.brightness = .6;
-    bloom_new.directions = 6; bloom_new.quality = 5;
+    bloom_new.directions = 1; bloom_new.quality = 3;
     bloom_new.threshold = .35;
 
 	if (FlxG.save.data.impact) cam.addShader(shaderFill);

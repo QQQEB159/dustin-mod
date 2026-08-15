@@ -8,8 +8,8 @@ public var bg_char:FlxSprite;
 function create() {
     bloom_new = new CustomShader("bloom_new");
     bloom_new.size = 100; bloom_new.brightness = 1.1;
-    bloom_new.directions = 16; bloom_new.quality = 5;
-    bloom_new.threshold = .85;
+    bloom_new.directions = 1; bloom_new.quality = 3;
+    bloom_new.threshold = .95;
 
     if (Options.gameplayShaders && FlxG.save.data.bloom) FlxG.camera.addShader(bloom_new);
 

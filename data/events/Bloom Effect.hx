@@ -8,7 +8,7 @@ function create() {
 
     bloom = new CustomShader("bloom");
     bloom.size = 0; bloom.brightness = 1;
-    bloom.directions = 8; bloom.quality = 4;
+    bloom.directions = 1; bloom.quality = 3;
     FlxG.camera.addShader(bloom);
     camHUD.addShader(bloom);
 }

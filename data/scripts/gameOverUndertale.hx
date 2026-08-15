@@ -33,8 +33,8 @@ function create(e) {
     bloom = new CustomShader("bloom");
     bloom.size = 40;
     bloom.brightness = 5;
-    bloom.directions = 8;
-    bloom.quality = 10;
+    bloom.directions = 1;
+    bloom.quality = 3;
 
     glitch = new CustomShader("glitching");
     glitch.SPEED = 1;

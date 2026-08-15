@@ -225,8 +225,8 @@ function create() {
             bloom = new CustomShader("bloom");
             bloom.size = 20;
             bloom.brightness = 5;
-            bloom.directions = 8;
-            bloom.quality = 10;
+            bloom.directions = 1;
+            bloom.quality = 3;
         }
         blackFlash = new CustomShader("impact_frames");
         glitch = new CustomShader("glitching");
@@ -649,8 +649,8 @@ function select() {
     if(Options.gameplayShaders && FlxG.save.data.bloom) {
         bloom.size = 40;
         bloom.brightness = 5;
-        bloom.directions = 8;
-        bloom.quality = 10;
+        bloom.directions = 1;
+        bloom.quality = 3;
     }
     weekSelected = true;
     canLerp = false;

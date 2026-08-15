@@ -15,8 +15,8 @@ function create() {
     blooming = new CustomShader("bloom");
     blooming.size = 0;
     blooming.brightness = 1;
-    blooming.directions = 8;
-    blooming.quality = 4;
+    blooming.directions = 1;
+    blooming.quality = 3;
 
     water = new CustomShader("waterDistortion");
     water.strength = 0;

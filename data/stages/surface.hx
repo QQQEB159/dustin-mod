@@ -154,7 +154,7 @@ function create() {
 			bloomShader = new CustomShader("bloom_new");
 			bloomShader.size = 60;
 			bloomShader.brightness = 2.0;
-			bloomShader.directions = 16;
+			bloomShader.directions = 1;
 			bloomShader.quality = 3;
 			bloomShader.threshold = .7;
 
@@ -163,7 +163,7 @@ function create() {
 			bloomHUDShader = new CustomShader("bloom_new");
 			bloomHUDShader.size = 20;
 			bloomHUDShader.brightness = 1.78;
-			bloomHUDShader.directions = 16;
+			bloomHUDShader.directions = 1;
 			bloomHUDShader.quality = 3;
 			bloomHUDShader.threshold = .75;
 
@@ -439,7 +439,7 @@ function postCreate() {
     {
     	bloomShader.threshold = 0.65;
     	bloomShader.size = 30;
-    	bloomShader.quality = 5;
+    	bloomShader.quality = 3;
     }
 
 	if (Options.gameplayShaders) camHUD.removeShader(bloomHUDShader);
@@ -689,7 +689,7 @@ function stepHit(step:Int) {
     			{
         			bloomShader.threshold = 0.675;
         			bloomShader.size = 30;
-        			bloomShader.quality = 5;
+        			bloomShader.quality = 3;
         		}
     		}
 
@@ -748,7 +748,7 @@ function stepHit(step:Int) {
     			{
         			bloomShader.threshold = 0.45;
         			bloomShader.size = 30;
-        			bloomShader.quality = 5;
+        			bloomShader.quality = 3;
         		}
 			}
 

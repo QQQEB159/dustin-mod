@@ -693,7 +693,7 @@ function stepHit(curStep:Int)
         curStep >= quickTimeEndStep
     )
     {
-        if (!FlxG.save.data.mechanics)
+        if (!FlxG.save.data.mechanics || FlxG.save.data.botplay)
         {
             finishShootQuickTimeEvent();
         }
@@ -1178,7 +1178,7 @@ function fadeInActiveLookAroundRoomTarget()
 
 function updateLookAroundTargetDeadline(elapsed:Float)
 {
-    if (!FlxG.save.data.mechanics)
+    if (!FlxG.save.data.mechanics || FlxG.save.data.botplay)
         return;
 
     if (
@@ -1445,7 +1445,7 @@ function updateShootQuickTimeEvent(elapsed:Float)
 
     var shouldShoot:Bool =
         !FlxG.save.data.mechanics ||
-        FlxG.keys.justPressed.SPACE || MusicBeatState.getState().mobileControls.instance.buttonExtra.justPressed;
+        FlxG.keys.justPressed.SPACE || MusicBeatState.getState().mobileControls.instance.buttonExtra.justPressed || FlxG.save.data.botplay;
 
     if (insideHitWindow && shouldShoot)
     {

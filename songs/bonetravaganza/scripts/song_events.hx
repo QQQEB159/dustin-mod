@@ -44,7 +44,7 @@ function postCreate() {
         params: [false, 0xFF000000, 1, 4, "linear", "In", "camHUD", "front"]
     });
 
-    skipText = textCrispy(new FunkinText(-28, FlxG.height - 50 - 6, FlxG.width, "Hold SPACE/LEFT CLICK to skip...").setFormat(Paths.font('8bit-jve.ttf'), 32, 0xffffffff, "right", FlxTextBorderStyle.OUTLINE, 0xff000000));
+    skipText = textCrispy(new FunkinText(-28, FlxG.height - 50 - 6, FlxG.width, "Tap and hold to skip...").setFormat(Paths.font('8bit-jve.ttf'), 32, 0xffffffff, "right", FlxTextBorderStyle.OUTLINE, 0xff000000));
     skipText.scrollFactor.set();
     skipText.scrollFactor.set();
     skipText.borderSize = 3;
@@ -64,6 +64,8 @@ function postCreate() {
     }
 
     ratio /= 360;  // before i forger  - Nex
+    
+    mobileControls.instance.visible = false;
 }
 
 function doAlphaTween() {
@@ -72,6 +74,7 @@ function doAlphaTween() {
 }
 
 var canSkip:Bool = true;
+var orange:Bool = true;
 function skipCutscene() {
     if(inst.time < 25600) {
         vocals.pause(); inst.pause();
@@ -79,6 +82,7 @@ function skipCutscene() {
         vocals.resume(); inst.resume();
     }
     canSkip = false;
+    mobileControls.instance.visible = true;
 }
 
 
@@ -128,15 +132,16 @@ function update(elapsed:Float) {
 
         holdCircle = null;
         skipText = null;
-    } else if (!canSkip && inst.time > 25600 && curVideo != null && curVideo?.bitmap?.time < 25600 - 8697) {
+    } else if (!canSkip && inst.time > 25600 && curVideo != null && curVideo?.bitmap?.time < 25600 - 8697 && orange) {
         curVideo?.bitmap?.time = 25600 - 8697;
+        orange = false;
     }
 }
 
 
 function stepHit(step:Int) {
     switch (step) {
-        case 144: countdown(0);
+        case 144: countdown(0); mobileControls.instance.visible = true;
         case 148: countdown(1);
         case 152: countdown(2);
         case 156: countdown(3);
@@ -192,6 +197,8 @@ function stepHit(step:Int) {
         case 3112:
             stage.getSprite("guitar_background").visible = true;
             stage.getSprite("guitar_foreground").visible = true;
+            
+            mobileControls.instance.buttonUp.color = 0xFFFF00;
 
             stage.getSprite("room").visible = false;
             stage.getSprite("tenna").visible = false;
@@ -223,22 +230,25 @@ function shiftStrums():Void {
     var tweensLeft = 0;
 
 
-    for (strumLine in strumLines) {
-        for (sprite in strumLine.members) {
-            if (sprite != null) {
-                tweensLeft++;
-                FlxTween.tween(sprite, {x: sprite.x + shift}, tweenTime, {
-                    ease: FlxEase.quadOut,
-                });
+    if (!Options.middleScroll)
+    {
+        for (strumLine in strumLines) {
+            for (sprite in strumLine.members) {
+                if (sprite != null) {
+                    tweensLeft++;
+                    FlxTween.tween(sprite, {x: sprite.x + shift}, tweenTime, {
+                        ease: FlxEase.quadOut,
+                    });
+                }
             }
-        }
-
-        for (note in strumLine.notes) {
-            if (note != null) {
-                tweensLeft++;
-                FlxTween.tween(note, {x: note.x + shift}, tweenTime, {
-                    ease: FlxEase.quadOut,
-                });
+    
+            for (note in strumLine.notes) {
+                if (note != null) {
+                    tweensLeft++;
+                    FlxTween.tween(note, {x: note.x + shift}, tweenTime, {
+                        ease: FlxEase.quadOut,
+                    });
+                }
             }
         }
     }

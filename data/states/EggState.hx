@@ -110,11 +110,6 @@ function create() {
     heart.antialiasing = false;
     heart.visible = false;
     add(heart);
-
-    #if mobile
-    addTouchPad('UP_DOWN', 'A');
-    addTouchPadCamera();
-    #end
 }
 
 function showLine() {

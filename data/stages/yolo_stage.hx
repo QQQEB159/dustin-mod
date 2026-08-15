@@ -13,8 +13,8 @@ function postCreate() if (Options.gameplayShaders && FlxG.save.data.bloom) {
     //for (i in stage.stageSprites.keys()) if (StringTools.startsWith(i, "stage")) stage.getSprite(i).shader = stageBloom;
     stageBloom.size = 1.5;
     stageBloom.brightness = 1;
-    stageBloom.directions = 8;
-    stageBloom.quality = 6;
+    stageBloom.directions = 1;
+    stageBloom.quality = 3;
 }
 
 function update() {
