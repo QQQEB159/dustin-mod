@@ -17,7 +17,7 @@ public var zButton:FunkinSprite;
 public var zPressed:Bool = false;
 public var zTouchID:Int = -1;
 
-function create() {
+function postCreate() {
 	joystickBg = new FunkinSprite(80, FlxG.height - 310).loadGraphic(Paths.image("mobile/joystick"));
 	joystickBg.cameras = [camUndertale];
 	joystickBg.updateHitbox();
