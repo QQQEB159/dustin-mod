@@ -12,7 +12,7 @@ function handleCode(str:String)
 {
 	curCode += str.toLowerCase();
 	
-	if (curCode == "17")
+	if (curCode == "117")
 	{
 		var diffs = Chart.loadChartMeta("red-demon-o").difficulties;
         PlayState.loadSong("red-demon-o", diffs[diffs.length - 1]);
